@@ -85,3 +85,93 @@
   .responsive-card-table td .actions{justify-content:flex-start}
   .jm-update-banner{bottom:calc(90px + env(safe-area-inset-bottom));align-items:flex-start}.jm-update-banner .btn{flex:0 0 auto}
 }
+
+
+/* V32.7.4 — cabeçalho legível e assinatura explícita do motorista */
+#driverAppView .driver-topbar{
+  display:block;
+  height:auto;
+  min-height:0;
+  padding:10px 14px;
+  overflow:visible;
+}
+.driver-topbar-main{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:12px;
+  align-items:center;
+}
+.driver-topbar-identity{min-width:0;display:grid;gap:2px}
+.driver-topbar-identity h2{margin:0;font-size:1.05rem;line-height:1.15}
+.driver-topbar-identity #driverUserBox{white-space:normal;overflow-wrap:anywhere;line-height:1.25}
+#driverAppView .driver-topbar .driver-topbar-actions{
+  width:auto;
+  display:flex;
+  flex-wrap:nowrap;
+  gap:8px;
+  align-items:center;
+  justify-content:flex-end;
+}
+#driverAppView .driver-topbar .driver-topbar-actions .btn{min-height:42px;padding:8px 12px;white-space:nowrap}
+.driver-runtime-details{margin-top:8px;border:1px solid rgba(148,163,184,.2);border-radius:12px;background:rgba(15,23,42,.18);overflow:hidden}
+.driver-runtime-details>summary{list-style:none;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px;align-items:center;min-height:40px;padding:8px 10px;cursor:pointer;color:var(--text)}
+.driver-runtime-details>summary::-webkit-details-marker{display:none}
+.driver-runtime-dot{width:10px;height:10px;border-radius:50%;background:var(--muted);box-shadow:0 0 0 4px rgba(148,163,184,.1)}
+.driver-runtime-dot.ok{background:var(--green);box-shadow:0 0 0 4px rgba(34,197,94,.12)}
+.driver-runtime-dot.warn{background:var(--amber);box-shadow:0 0 0 4px rgba(245,158,11,.12)}
+.driver-runtime-dot.danger{background:var(--red);box-shadow:0 0 0 4px rgba(239,68,68,.12)}
+.driver-runtime-summary{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:.78rem;font-weight:800}
+.driver-runtime-toggle-label{font-size:.68rem;color:var(--accent);font-weight:900;text-transform:uppercase;letter-spacing:.05em}
+.driver-runtime-details[open] .driver-runtime-toggle-label::after{content:" ▲"}
+.driver-runtime-details:not([open]) .driver-runtime-toggle-label::after{content:" ▼"}
+.driver-runtime-details .driver-runtime-bar{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;max-width:none;margin:0;padding:0 10px 10px}
+.driver-runtime-details .driver-runtime-chip{display:flex;min-width:0;max-width:100%;white-space:normal;overflow-wrap:anywhere;line-height:1.25;border-radius:10px}
+
+.proof-wizard-head-actions{display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-wrap:wrap}
+.signature-shortcut-btn{border-color:rgba(34,197,94,.55)!important;background:rgba(34,197,94,.12)!important;color:#bbf7d0!important;min-height:36px!important;padding:7px 10px!important}
+.signature-capture-card{padding:14px;border:1px solid rgba(34,197,94,.48);border-radius:16px;background:linear-gradient(180deg,rgba(34,197,94,.08),rgba(15,23,42,.14));box-shadow:0 12px 28px rgba(0,0,0,.12);scroll-margin-top:150px}
+.signature-card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:12px}
+.signature-card-head>div{display:grid;gap:3px;min-width:0}
+.signature-card-head strong{font-size:1.02rem}
+.signature-card-head small{color:var(--muted);line-height:1.35}
+.signature-state-badge{flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;min-height:30px;padding:5px 9px;border-radius:999px;border:1px solid var(--line);font-size:.7rem;font-weight:900;white-space:nowrap}
+.signature-state-badge.pending{color:var(--amber);border-color:rgba(245,158,11,.48);background:rgba(245,158,11,.1)}
+.signature-state-badge.ready{color:#bbf7d0;border-color:rgba(34,197,94,.55);background:rgba(34,197,94,.12)}
+.signature-state-badge.saved{color:#bae6fd;border-color:rgba(56,189,248,.55);background:rgba(56,189,248,.12)}
+.signature-state-badge.justified{color:#fde68a;border-color:rgba(245,158,11,.55);background:rgba(245,158,11,.12)}
+.signature-capture-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.signature-canvas-wrap{min-width:0}
+.signature-canvas-wrap .signature-pad{width:100%;height:clamp(210px,34vh,300px);min-height:210px}
+.signature-actions{margin-top:8px;justify-content:flex-end}
+
+@media(max-width:760px){
+  #driverAppView .driver-topbar{position:sticky;top:0;padding:calc(8px + env(safe-area-inset-top)) 10px 8px}
+  .driver-topbar-main{grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:start}
+  .driver-topbar-identity h2{font-size:.98rem}
+  #driverAppView .driver-topbar .driver-topbar-actions{width:auto;display:grid;grid-template-columns:1fr 1fr;gap:6px}
+  #driverAppView .driver-topbar .driver-topbar-actions .btn{min-width:0;min-height:38px;padding:7px 9px;font-size:.72rem}
+  .driver-runtime-details{margin-top:7px}
+  .driver-runtime-details>summary{min-height:38px;padding:7px 9px}
+  .driver-runtime-summary{font-size:.72rem}
+  .driver-runtime-details .driver-runtime-bar{grid-template-columns:1fr;padding:0 8px 8px}
+  .driver-runtime-details .driver-runtime-chip{font-size:.7rem;min-height:34px;padding:7px 9px}
+  .proof-wizard-head{display:grid;grid-template-columns:1fr;gap:8px}
+  .proof-wizard-head-actions{justify-content:space-between;width:100%}
+  .signature-shortcut-btn{flex:1}
+  .signature-capture-card{padding:11px;scroll-margin-top:175px}
+  .signature-card-head{display:grid;grid-template-columns:1fr;gap:8px}
+  .signature-state-badge{width:max-content}
+  .signature-capture-grid{grid-template-columns:1fr}
+  .signature-mode-toolbar{grid-template-columns:1fr;align-items:stretch}
+  .signature-mode-toolbar .btn{width:100%;min-height:48px}
+  .signature-canvas-wrap .signature-pad{height:240px;min-height:220px}
+  #driverPanelActive,#driverPanelCalls,#driverPanelMap,#driverPanelLocation,#driverPanelProofs,#driverPanelReport,#driverPanelExpense{scroll-margin-top:175px}
+}
+
+@media(max-width:420px){
+  .driver-topbar-main{grid-template-columns:1fr}
+  #driverAppView .driver-topbar .driver-topbar-actions{width:100%;grid-template-columns:1fr 1fr}
+  .driver-runtime-toggle-label{font-size:.62rem}
+  .proof-wizard-head-actions{display:grid;grid-template-columns:auto minmax(0,1fr);width:100%}
+  .signature-shortcut-btn{width:100%}
+}

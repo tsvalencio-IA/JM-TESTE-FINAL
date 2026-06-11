@@ -4,7 +4,7 @@
   const { $, esc, parseMoney, toast, statusClass, routeKm, mapsRouteUrl, statusKey, statusLabel, isFinalStatus, setupCollapsiblePanels, pointFrom } = window.JM.utils;
   const { auth, db, arrayUnion, getRealtimeDb, rtdbKey } = window.JM.firebase;
   const cfg = window.JM_CONFIG || {};
-  const DRIVER_FLOW_VERSION = "jm-v32-7-3-login-sem-travamento";
+  const DRIVER_FLOW_VERSION = "jm-v32-7-4-motorista-assinatura-header";
   const state = {
     user: null,
     profile: null,
@@ -55,7 +55,7 @@
     { key: "carregamento", label: "Carregamento", short: "Carga", phase: "carregamento" },
     { key: "transporte", label: "Transporte", short: "Transporte", phase: "transporte" },
     { key: "entrega", label: "Entrega", short: "Entrega", phase: "entrega" },
-    { key: "finalizacao", label: "Finalização", short: "Final", phase: "finalizacao" }
+    { key: "finalizacao", label: "Finalização e assinatura", short: "Assinar", phase: "finalizacao" }
   ];
   const PROOF_INPUT_STEP_MAP = {
     proofStageRetirada: "retirada",
@@ -509,6 +509,14 @@
       next.classList.toggle("hidden", state.proofWizardStep === maxIndex);
     }
     if (submit) submit.classList.toggle("hidden", state.proofWizardStep !== maxIndex);
+    const signatureShortcut = $("driverOpenSignatureBtn");
+    if (signatureShortcut) signatureShortcut.disabled = !call;
+    if (step.key === "finalizacao") {
+      window.setTimeout(() => {
+        if (signaturePad && typeof signaturePad.resize === "function") signaturePad.resize();
+        renderSignatureState(call);
+      }, 40);
+    }
     if (call) {
       try { localStorage.setItem(proofWizardStorageKey(call.id), String(state.proofWizardStep)); } catch (_) {}
     }
@@ -705,6 +713,20 @@
         sync.textContent = "Sem envios pendentes";
         sync.className = "driver-runtime-chip ok";
       }
+    }
+    const runtimeSummary = $("driverRuntimeSummary");
+    const runtimeDot = $("driverRuntimeDot");
+    const active = selectedCall();
+    const callLabel = active ? (active.protocolo || active.id || "Atendimento selecionado") : "Nenhum atendimento selecionado";
+    if (runtimeSummary) {
+      runtimeSummary.textContent = !online
+        ? "Offline · " + callLabel
+        : state.pendingOperations > 0
+          ? state.pendingOperations + " envio(s) · " + callLabel
+          : "Online · " + callLabel;
+    }
+    if (runtimeDot) {
+      runtimeDot.className = "driver-runtime-dot " + (!online ? "danger" : state.pendingOperations > 0 ? "warn" : "ok");
     }
   }
 
@@ -1323,7 +1345,7 @@
         }
       }
     }
-    signaturePad = { canvas, ctx, drawing: false, dirty: false, enabled: false, pointerId: null, lastPoint: null };
+    signaturePad = { canvas, ctx, drawing: false, dirty: false, enabled: false, pointerId: null, lastPoint: null, resize: resizeSignatureCanvas };
     resizeSignatureCanvas();
     function setSignatureMode(enabled) {
       signaturePad.enabled = !!enabled;
@@ -1783,6 +1805,44 @@
     setupDamageDiagram();
   }
 
+  function renderSignatureState(call) {
+    const badge = $("signatureStateBadge");
+    if (!badge) return;
+    const phase = $("signaturePhase") ? $("signaturePhase").value : "finalizacao";
+    const phaseData = call && call.phaseSignatures && call.phaseSignatures[phase] || null;
+    const fallback = call && call.customerSignature || null;
+    const saved = phaseData || fallback;
+    const refusal = $("signatureRefusalReason") && $("signatureRefusalReason").value.trim();
+    if (signaturePad && signaturePad.dirty) {
+      badge.textContent = "Assinatura pronta";
+      badge.className = "signature-state-badge ready";
+    } else if (saved && saved.refused) {
+      badge.textContent = "Justificativa salva";
+      badge.className = "signature-state-badge justified";
+    } else if (saved && (saved.signatureUrl || saved.cloudinaryUrl)) {
+      badge.textContent = "Assinatura salva";
+      badge.className = "signature-state-badge saved";
+    } else if (refusal) {
+      badge.textContent = "Justificativa pronta";
+      badge.className = "signature-state-badge ready";
+    } else {
+      badge.textContent = "Pendente";
+      badge.className = "signature-state-badge pending";
+    }
+  }
+
+  function openSignatureCapture() {
+    const call = requireActiveCall("registrar a assinatura");
+    if (!call) return;
+    setProofWizardStep(PROOF_WIZARD_STEPS.length - 1, { scroll: false });
+    window.setTimeout(() => {
+      const section = $("driverSignatureSection");
+      if (signaturePad && typeof signaturePad.resize === "function") signaturePad.resize();
+      renderSignatureState(call);
+      if (section) section.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 80);
+  }
+
   function loadProofFormForCall(callId, sourceCall) {
     const call = sourceCall || state.calls[callId];
     if (!call) return;
@@ -1810,6 +1870,7 @@
     loadDamageAssessmentPayload(checklist.damageAssessment || call.damageAssessment || {});
     renderSavedEvidenceSummary(call);
     restoreProofWizardStep(call);
+    renderSignatureState(call);
     setProofSubmitStatus("Checklist carregado. Avance etapa por etapa e salve o rascunho antes de sair.", "info", false);
   }
 
@@ -2931,6 +2992,7 @@
     startRouteForCall,
     startLocationForCall: startDriverPhoneLocation,
     stopDriverPhoneLocation,
+    openSignatureCapture,
     setProofWizardStep,
     saveProofDraft,
     state
@@ -2938,6 +3000,11 @@
   setupProofStageButtons();
   setupProofWizardLayout();
   setupSignaturePad();
+  if ($("driverOpenSignatureBtn")) $("driverOpenSignatureBtn").onclick = openSignatureCapture;
+  if ($("signaturePhase")) $("signaturePhase").addEventListener("change", () => renderSignatureState(selectedCall()));
+  if ($("signatureRefusalReason")) $("signatureRefusalReason").addEventListener("input", () => renderSignatureState(selectedCall()));
+  if ($("signatureCanvas")) $("signatureCanvas").addEventListener("pointerup", () => window.setTimeout(() => renderSignatureState(selectedCall()), 0));
+  if ($("clearSignatureBtn")) $("clearSignatureBtn").addEventListener("click", () => window.setTimeout(() => renderSignatureState(selectedCall()), 0));
   setupDamageDiagram();
   setupAccessoryChecklist();
   renderDriverConnectivity();
