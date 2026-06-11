@@ -1,6 +1,6 @@
 (function () {
   "use strict";
-  const VERSION = "jm-v32-7-2-login-deterministico";
+  const VERSION = "jm-v32-7-3-login-sem-travamento";
   const jm = window.JM || {};
   const firebaseApi = jm.firebase;
   if (!firebaseApi || !firebaseApi.db || !firebaseApi.auth) return;

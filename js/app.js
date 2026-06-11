@@ -10,7 +10,7 @@
   const { auth, secondaryAuth, db, ts, arrayUnion, emailIsAdmin, getRealtimeDb, rtdbKey } = window.JM.firebase;
   const cfg = window.JM_CONFIG || {};
   const SYSTEM_SIGNATURE = "";
-  const LOGIN_FLOW_VERSION = "jm-v32-7-2-login-deterministico";
+  const LOGIN_FLOW_VERSION = "jm-v32-7-3-login-sem-travamento";
   let trackerTimer = null;
   let trackerBusy = false;
   let mapRefreshTimer = null;
@@ -4677,7 +4677,7 @@ Rota: ${url}`;
       technician: original.technician || "",
       originDetails: original.originDetails || null,
       destinationDetails: original.destinationDetails || null,
-      parserVersion: "jm-v32-7-2-login-deterministico"
+      parserVersion: "jm-v32-7-3-login-sem-travamento"
     };
     return { original, reviewed };
   }
@@ -4700,7 +4700,7 @@ Rota: ${url}`;
       aiGenerated: true,
       aiReviewed: true,
       aiCreatedAt: now,
-      aiParserVersion: "jm-v32-7-2-login-deterministico",
+      aiParserVersion: "jm-v32-7-3-login-sem-travamento",
       cliente: reviewed.customerName || reviewed.requester || reviewed.billingClient || "Cliente não informado",
       phone: reviewed.customerPhone || "",
       serviceType: reviewed.serviceType || "Seguradora",
@@ -4871,7 +4871,7 @@ Rota: ${url}`;
           tariffSummary: reviewed.tariffSummary,
           mapLinks: original.mapLinks || [],
           rawText: draft.rawText || "",
-          parserVersion: "jm-v32-7-2-login-deterministico"
+          parserVersion: "jm-v32-7-3-login-sem-travamento"
         },
         rawPayload: draft.rawText || "",
         payload: Object.assign({}, original, reviewed),

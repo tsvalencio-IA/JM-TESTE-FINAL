@@ -1,0 +1,13 @@
+"use strict";
+const assert = require("assert");
+const fs = require("fs");
+const path = require("path");
+const root = path.resolve(__dirname, "..");
+const ux = fs.readFileSync(path.join(root, "js/final-ux.js"), "utf8");
+assert.ok(ux.includes('const emptySignature = "no-selected-call"'), "faltou proteção no estado sem chamado selecionado");
+assert.ok(ux.includes('if (host.dataset.signature === emptySignature) return;'), "estado vazio ainda pode reescrever o DOM em loop");
+assert.ok(ux.includes('startEnhancementsWhenPanelIsVisible'), "melhorias pesadas não foram adiadas até o painel abrir");
+assert.ok(ux.includes('mutation.observe(appView || document.body'), "observer não foi limitado ao painel da aplicação");
+assert.ok(ux.includes('requestAnimationFrame(() =>'), "atualizações dinâmicas não estão agrupadas por frame");
+assert.ok(!ux.includes('mutation.observe(document.body, { childList: true, subtree: true });'), "observer global antigo ainda está ativo");
+console.log("PASS login-ui-responsiveness.test.js");

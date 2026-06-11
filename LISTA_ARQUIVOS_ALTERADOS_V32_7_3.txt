@@ -1,0 +1,31 @@
+Arquivos alterados/criados em relação à V32.7.2:
+- DEVTOOLS_TEST_LOGIN_V32_7_2.js
+- ENTREGA_V32_7_3_LOGIN_SEM_TRAVAMENTO.md
+- MANIFESTO_SHA256_V32_7_3.json
+- VALIDACAO_V32_7_3.txt
+- cliente-chamado.html
+- index.html
+- jm.html
+- js/app.js
+- js/final-ux.js
+- js/insurance-parser.js
+- js/motorista-final-ux.js
+- js/motorista.js
+- js/superadmin-public-config.js
+- motorista.html
+- relatorio.html
+- service-worker.js
+- superadmin.html
+- tests/final-phases.test.js
+- tests/login-responsiveness-browser.html
+- tests/login-ui-responsiveness.test.js
+- tests/phase1-motorista.test.js
+- tests/phase2-motorista.test.js
+- tests/run-all.js
+- tests/version-cache.test.js
+- version.json
+
+Arquivos removidos: nenhum
+
+Firestore Rules: sem alteração.
+Realtime Database Rules: sem alteração.

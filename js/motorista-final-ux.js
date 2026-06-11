@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  const VERSION = "jm-v32-7-2-login-deterministico";
+  const VERSION = "jm-v32-7-3-login-sem-travamento";
   const motor = window.JM && window.JM.motorista;
   const utils = window.JM && window.JM.utils || {};
   if (!motor || !motor.state) return;

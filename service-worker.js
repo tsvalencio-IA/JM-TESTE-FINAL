@@ -1,4 +1,4 @@
-const CACHE_NAME = "jm-v32-7-2-login-deterministico";
+const CACHE_NAME = "jm-v32-7-3-login-sem-travamento";
 const ASSETS = [
   "./",
   "./index.html",

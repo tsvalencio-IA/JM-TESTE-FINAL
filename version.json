@@ -1,8 +1,8 @@
 {
-  "version": "jm-v32-7-2-login-deterministico",
-  "release": "V32.7.1 Hotfix Login Gestor Estável",
+  "version": "jm-v32-7-3-login-sem-travamento",
+  "release": "V32.7.3 Hotfix Login Sem Travamento",
   "date": "2026-06-11",
   "multiempresa": false,
-  "build": "2026-06-11-login-hotfix",
-  "notes": "Correção do login gestor/superadmin com feedback, timeout e recuperação sem alterar regras Firebase."
+  "build": "2026-06-11-mutation-loop-hotfix",
+  "notes": "Corrige loop infinito do MutationObserver no painel gestor, adia melhorias pesadas até o painel abrir e preserva login, Firebase e regras existentes."
 }

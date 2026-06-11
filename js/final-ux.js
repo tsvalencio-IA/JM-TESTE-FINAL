@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  const VERSION = "jm-v32-7-2-login-deterministico";
+  const VERSION = "jm-v32-7-3-login-sem-travamento";
   const utils = window.JM && window.JM.utils || {};
   const app = window.JM && window.JM.app;
   if (!app || !app.state) return;
@@ -63,6 +63,9 @@
     if (!host) return;
     const call = state.calls && state.calls[state.selectedCallId];
     if (!call) {
+      const emptySignature = "no-selected-call";
+      if (host.dataset.signature === emptySignature) return;
+      host.dataset.signature = emptySignature;
       host.innerHTML = `<div class="dispatch-advisor-empty"><b>Selecione um chamado</b><span>O sistema ordenará os veículos por proximidade e qualidade da posição.</span></div>`;
       return;
     }
@@ -479,22 +482,52 @@
   // ---------------------------------------------------------------------------
   function bootstrap() {
     setupOperationalHome();
-    setupCentralAdvisor();
-    setupCallWizard();
-    setupAiValidation();
-    renderFinanceHubs();
-    decorateAllTables();
     setupUpdateBanner();
-    syncPublicIntegrationsFromManager();
 
-    const mutation = new MutationObserver(() => {
-      decorateAllTables();
-      renderDispatchAdvisor();
-      renderAiValidationSummary();
-      renderFinanceHubs();
-      syncPublicIntegrationsFromManager();
-    });
-    mutation.observe(document.body, { childList: true, subtree: true });
+    const appView = $("appView");
+    let enhancementsStarted = false;
+    let refreshScheduled = false;
+    let mutation = null;
+
+    function refreshDynamicUx() {
+      if (refreshScheduled) return;
+      refreshScheduled = true;
+      requestAnimationFrame(() => {
+        refreshScheduled = false;
+        if (appView && appView.classList.contains("hidden")) return;
+        decorateAllTables();
+        renderDispatchAdvisor();
+        renderAiValidationSummary();
+        renderFinanceHubs();
+        syncPublicIntegrationsFromManager();
+      });
+    }
+
+    function startEnhancementsWhenPanelIsVisible() {
+      if (enhancementsStarted) return;
+      if (appView && appView.classList.contains("hidden")) return;
+      enhancementsStarted = true;
+
+      setupCentralAdvisor();
+      setupCallWizard();
+      setupAiValidation();
+      refreshDynamicUx();
+
+      mutation = new MutationObserver(refreshDynamicUx);
+      mutation.observe(appView || document.body, { childList: true, subtree: true });
+    }
+
+    if (appView && appView.classList.contains("hidden")) {
+      const visibilityObserver = new MutationObserver(() => {
+        if (appView.classList.contains("hidden")) return;
+        visibilityObserver.disconnect();
+        startEnhancementsWhenPanelIsVisible();
+      });
+      visibilityObserver.observe(appView, { attributes: true, attributeFilter: ["class"] });
+    } else {
+      startEnhancementsWhenPanelIsVisible();
+    }
+
     window.addEventListener("online", () => notify("Conexão restabelecida.", "ok"));
     window.addEventListener("offline", () => notify("Sem internet. O Firebase manterá dados simples em cache; uploads precisam de conexão.", "warn"));
     console.info("JM UX final", VERSION);

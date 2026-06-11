@@ -1,0 +1,63 @@
+JM GUINCHOS V32.7.3 - VALIDACAO
+UTC 2026-06-11 16:51:27
+
+[1] Node syntax
+OK js/app.js
+OK js/config.firebase.js
+OK js/final-ux.js
+OK js/firebase.js
+OK js/google-maps.js
+OK js/insurance-parser.js
+OK js/mapa.js
+OK js/motorista-final-ux.js
+OK js/motorista.js
+OK js/superadmin-public-config.js
+OK js/superadmin.js
+OK js/toll-plazas.js
+OK js/tracker.js
+OK js/utils.js
+OK service-worker.js
+
+[2] JSON
+OK BASE_FASE2_SHA256.json
+OK BASE_OFICIAL_SHA256.json
+OK MANIFESTO_SHA256_V32_7.json
+OK MANIFESTO_SHA256_V32_7_1.json
+OK MANIFESTO_SHA256_V32_7_2.json
+OK MANIFESTO_SHA256_V32_7_3.json
+OK capacitor.config.json
+OK database.rules.json
+OK firebase.json
+OK manifest.json
+OK package.json
+OK railway.json
+OK version.json
+
+[3] Testes
+PASS insurance-parser.test.js
+PASS geocode-brasil.test.js
+PASS version-cache.test.js
+PASS phase1-motorista.test.js
+PASS phase2-motorista.test.js
+PASS final-phases.test.js
+PASS login-gestor.test.js
+PASS login-ui-responsiveness.test.js
+ALL TESTS PASSED
+
+[4] Protecoes anti-travamento
+OK assinatura estado sem chamado
+OK inicializacao adiada
+OK observer limitado ao app
+OK observer global antigo removido
+
+[5] Regras
+OK firestore.rules identica
+OK database.rules.json identica
+HTTP 200 index.html
+HTTP 200 jm.html
+HTTP 200 motorista.html
+HTTP 200 superadmin.html
+HTTP 200 cliente-chamado.html
+HTTP 200 relatorio.html
+HTTP 200 version.json
+HTTP 200 js/final-ux.js

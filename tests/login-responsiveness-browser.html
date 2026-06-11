@@ -1,0 +1,16 @@
+<!doctype html><html><body>
+<input id="email" value="">
+<div id="appView" class="hidden">
+  <div id="opsKpis"></div><div id="opsCallsList"></div><div id="opsVehiclesList"></div>
+  <form id="callForm"><input id="callClient"><button type="submit">Salvar</button></form>
+  <div id="aiReviewBox"></div>
+  <section id="view-financeiro"><div class="grid"></div></section>
+  <section id="view-pagamentos"><div class="grid"></div></section>
+</div>
+<script>
+window.JM={utils:{},app:{state:{calls:{},vehicles:{},transactions:{},expenses:{},aiDrafts:[],selectedCallId:"",selectedVehicleId:""}}};
+setTimeout(()=>{const e=document.getElementById('email');e.focus();e.value='jm@jm.com';document.body.dataset.loginResponsive=(document.activeElement===e&&e.value==='jm@jm.com')?'PASS':'FAIL';},100);
+setTimeout(()=>{document.body.dataset.timerAlive='PASS';},500);
+</script>
+<script src="../js/final-ux.js"></script>
+</body></html>

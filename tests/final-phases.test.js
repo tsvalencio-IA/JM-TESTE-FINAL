@@ -4,7 +4,7 @@ const fs = require("fs");
 const path = require("path");
 const root = path.resolve(__dirname, "..");
 const read = (file) => fs.readFileSync(path.join(root, file), "utf8");
-const version = "jm-v32-7-2-login-deterministico";
+const version = "jm-v32-7-3-login-sem-travamento";
 
 const jm = read("jm.html");
 const motorista = read("motorista.html");
