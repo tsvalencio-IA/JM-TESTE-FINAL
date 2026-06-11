@@ -22,12 +22,12 @@ window.JM_CONFIG = {
   },
   auth: {
     adminEmails: [
-      "jm@jm.com.br",
-      "jm@jm.com"
+      "jm@jm.com",
+      "tsvalencio@gmail.com"
     ],
     superadminEmails: [
-      "jm@jm.com.br",
-      "jm@jm.com"
+      "jm@jm.com",
+      "tsvalencio@gmail.com"
     ],
     autoRepairGestorLogin: true
   },

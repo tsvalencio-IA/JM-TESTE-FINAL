@@ -10,7 +10,7 @@
   const { auth, secondaryAuth, db, ts, arrayUnion, emailIsAdmin, getRealtimeDb, rtdbKey } = window.JM.firebase;
   const cfg = window.JM_CONFIG || {};
   const SYSTEM_SIGNATURE = "";
-  const LOGIN_FLOW_VERSION = "jm-v32-7-final-operacional-ux10";
+  const LOGIN_FLOW_VERSION = "jm-v32-7-2-login-deterministico";
   let trackerTimer = null;
   let trackerBusy = false;
   let mapRefreshTimer = null;
@@ -70,7 +70,7 @@
   };
 
   const unsubscribers = [];
-  const OFFICE_ROLES = ["admin", "finance", "gestor", "owner", "manager", "gerente", "auxiliar", "atendente"];
+  const OFFICE_ROLES = ["admin", "superadmin", "finance", "gestor", "owner", "manager", "gerente", "auxiliar", "atendente"];
   const OWNER_ROLES = ["admin", "superadmin", "gestor", "owner", "manager"];
   const FINANCE_ROLES = ["admin", "superadmin", "gestor", "owner", "manager", "finance"];
   const FLEET_ROLES = ["admin", "superadmin", "gestor", "owner", "manager", "gerente"];
@@ -80,6 +80,44 @@
   function normalizedRole(role) {
     return String(role || "").toLowerCase().trim();
   }
+  let loginBusy = false;
+  let lastAuthUser = null;
+
+  function promiseWithTimeout(promise, timeoutMs, message) {
+    let timer;
+    const timeout = new Promise((_, reject) => {
+      timer = setTimeout(() => {
+        const err = new Error(message || "Tempo limite excedido.");
+        err.code = "jm/timeout";
+        reject(err);
+      }, timeoutMs);
+    });
+    return Promise.race([promise, timeout]).finally(() => clearTimeout(timer));
+  }
+
+  function setLoginUi(options) {
+    const opts = options || {};
+    const submit = $("loginSubmit");
+    const status = $("loginStatus");
+    const error = $("loginError");
+    const recovery = $("loginRecoveryActions");
+    loginBusy = !!opts.busy;
+    if (submit) {
+      submit.disabled = loginBusy;
+      submit.textContent = loginBusy ? (opts.buttonText || "Aguarde...") : "Entrar";
+      submit.setAttribute("aria-busy", loginBusy ? "true" : "false");
+    }
+    if (status) status.textContent = opts.status || "";
+    if (error) error.textContent = opts.error || "";
+    if (recovery) recovery.classList.toggle("hidden", !opts.recovery);
+  }
+
+  function isTemporaryLoginError(err) {
+    const code = String(err && err.code || "");
+    const message = String(err && err.message || "").toLowerCase();
+    return code === "jm/timeout" || code === "unavailable" || code === "firestore/unavailable" || message.includes("network") || message.includes("offline") || message.includes("tempo limite");
+  }
+
 
   function isOffice() {
     return state.profile && OFFICE_ROLES.includes(normalizedRole(state.profile.role));
@@ -2158,39 +2196,166 @@
     }
   }
 
+  let loginFlowPromise = null;
+  let completedLoginUid = "";
+
+  function loginErrorText(err) {
+    const code = String(err && err.code || "");
+    const message = String(err && err.message || "Falha desconhecida.");
+    return code ? `${message} [${code}]` : message;
+  }
+
+  async function completeGestorLogin(user, options) {
+    const opts = options || {};
+    if (!user) return false;
+
+    if (!opts.force && completedLoginUid === user.uid && state.profile && !$('appView').classList.contains('hidden')) {
+      return true;
+    }
+    if (loginFlowPromise && !opts.force) return loginFlowPromise;
+
+    loginFlowPromise = (async () => {
+      lastAuthUser = user;
+      state.user = user;
+      console.info('[JM LOGIN] etapa 1/4 — usuário autenticado', user.email, user.uid);
+      setLoginUi({ busy: true, buttonText: 'Carregando...', status: 'Login aceito. Validando perfil de gestor...' });
+
+      try {
+        const profile = await promiseWithTimeout(
+          ensureGestorProfile(user),
+          20000,
+          'O Firebase autenticou o usuário, mas não respondeu ao carregar o perfil.'
+        );
+
+        console.info('[JM LOGIN] etapa 2/4 — perfil carregado', profile && profile.role);
+        const role = normalizedRole(profile && profile.role);
+        if (!OFFICE_ROLES.includes(role)) {
+          const error = new Error('O perfil autenticado não possui acesso ao painel gestor. Perfil atual: ' + (role || 'sem perfil') + '.');
+          error.code = 'jm/role-not-allowed';
+          throw error;
+        }
+
+        state.profile = { ...profile, role };
+        $('userBox').innerHTML = `<b>${esc(state.profile.nome || user.email)}</b><br>${esc(user.email)}<br><span class="badge info">${esc(role)}</span>`;
+        applyRoleVisibility();
+
+        console.info('[JM LOGIN] etapa 3/4 — abrindo painel');
+        $('loginView').classList.add('hidden');
+        $('appView').classList.remove('hidden');
+        setLoginUi({ busy: false, status: '' });
+        completedLoginUid = user.uid;
+
+        // Os listeners não podem impedir a abertura da interface.
+        try {
+          startListeners();
+        } catch (listenerError) {
+          console.error('[JM LOGIN] painel abriu, mas houve falha ao iniciar listeners', listenerError);
+          toast('Painel aberto, mas alguns dados não puderam ser sincronizados: ' + loginErrorText(listenerError), 'danger');
+        }
+
+        console.info('[JM LOGIN] etapa 4/4 — painel gestor pronto');
+        return true;
+      } catch (err) {
+        console.error('[JM LOGIN] falha ao concluir acesso gestor', err);
+        completedLoginUid = '';
+        state.profile = null;
+        $('appView').classList.add('hidden');
+        $('loginView').classList.remove('hidden');
+
+        const temporary = isTemporaryLoginError(err);
+        setLoginUi({
+          busy: false,
+          recovery: true,
+          error: temporary
+            ? 'O e-mail e a senha foram aceitos, mas o perfil não respondeu. Toque em Tentar novamente.'
+            : loginErrorText(err),
+          status: 'Sessão autenticada: ' + (user.email || 'usuário')
+        });
+        // Não desconectar automaticamente: isso permite diagnosticar e tentar novamente.
+        return false;
+      } finally {
+        loginFlowPromise = null;
+      }
+    })();
+
+    return loginFlowPromise;
+  }
+
   auth.onAuthStateChanged(async (user) => {
-    stopListeners();
-    state.user = user || null;
-    state.profile = null;
+    console.info('[JM LOGIN] estado da autenticação alterado', user ? user.email : 'sem sessão');
     if (!user) {
-      $("loginView").classList.remove("hidden");
-      $("appView").classList.add("hidden");
+      stopListeners();
+      completedLoginUid = '';
+      lastAuthUser = null;
+      state.user = null;
+      state.profile = null;
+      $('loginView').classList.remove('hidden');
+      $('appView').classList.add('hidden');
+      setLoginUi({ busy: false });
       return;
     }
-
-    try {
-      state.profile = await ensureGestorProfile(user);
-      $("loginView").classList.add("hidden");
-      $("appView").classList.remove("hidden");
-      $("userBox").innerHTML = `<b>${esc(state.profile.nome || user.email)}</b><br>${esc(user.email)}<br><span class="badge info">${esc(state.profile.role)}</span>`;
-      applyRoleVisibility();
-      startListeners();
-    } catch (err) {
-      $("appView").classList.add("hidden");
-      $("loginView").classList.remove("hidden");
-      $("loginError").textContent = err && err.message ? err.message : "Acesso de gestor não autorizado.";
-      await auth.signOut().catch(() => {});
-    }
+    await completeGestorLogin(user);
   });
 
-  $("loginForm").onsubmit = async (e) => {
-    e.preventDefault();
-    $("loginError").textContent = "";
-    try {
-      await auth.signInWithEmailAndPassword($("loginEmail").value.trim(), $("loginPass").value);
-    } catch (err) {
-      $("loginError").textContent = friendlyAuthError(err);
+  async function handleGestorLoginSubmit(e) {
+    if (e) e.preventDefault();
+    console.info('[JM LOGIN] botão Entrar acionado');
+    if (loginBusy) return false;
+
+    const email = String($('loginEmail').value || '').trim().toLowerCase();
+    const password = String($('loginPass').value || '');
+    if (!email || !password) {
+      setLoginUi({ busy: false, error: 'Informe o e-mail e a senha.' });
+      return false;
     }
+
+    setLoginUi({ busy: true, buttonText: 'Entrando...', status: 'Validando e-mail e senha...', error: '' });
+    try {
+      await promiseWithTimeout(
+        auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL),
+        8000,
+        'Não foi possível preparar a sessão local.'
+      );
+      const credential = await promiseWithTimeout(
+        auth.signInWithEmailAndPassword(email, password),
+        20000,
+        'A autenticação demorou além do esperado.'
+      );
+      console.info('[JM LOGIN] credenciais aceitas', credential.user && credential.user.email);
+      setLoginUi({ busy: true, buttonText: 'Carregando...', status: 'Credenciais aceitas. Abrindo o painel...' });
+      await completeGestorLogin(credential.user, { force: true });
+    } catch (err) {
+      console.error('[JM LOGIN] falha na autenticação', err);
+      setLoginUi({ busy: false, recovery: false, error: friendlyAuthError(err) });
+    }
+    return false;
+  }
+
+  const loginFormElement = $('loginForm');
+  if (loginFormElement) loginFormElement.onsubmit = handleGestorLoginSubmit;
+
+  const loginSubmitElement = $('loginSubmit');
+  if (loginSubmitElement) {
+    loginSubmitElement.onclick = (event) => {
+      // Fallback explícito para navegadores/PWA que não disparem submit corretamente.
+      if (event && event.detail === 0) return;
+      if (!loginFormElement) handleGestorLoginSubmit(event);
+    };
+  }
+
+  if ($('loginRetryProfile')) $('loginRetryProfile').onclick = async () => {
+    const user = auth.currentUser || lastAuthUser;
+    if (!user) {
+      setLoginUi({ busy: false, error: 'A sessão expirou. Digite a senha novamente.' });
+      return;
+    }
+    await completeGestorLogin(user, { force: true });
+  };
+
+  if ($('loginSignOut')) $('loginSignOut').onclick = async () => {
+    setLoginUi({ busy: true, status: 'Encerrando sessão...' });
+    await auth.signOut().catch(() => {});
+    setLoginUi({ busy: false });
   };
 
   function friendlyAuthError(err) {
@@ -4512,7 +4677,7 @@ Rota: ${url}`;
       technician: original.technician || "",
       originDetails: original.originDetails || null,
       destinationDetails: original.destinationDetails || null,
-      parserVersion: "jm-v32-7-final-operacional-ux10"
+      parserVersion: "jm-v32-7-2-login-deterministico"
     };
     return { original, reviewed };
   }
@@ -4535,7 +4700,7 @@ Rota: ${url}`;
       aiGenerated: true,
       aiReviewed: true,
       aiCreatedAt: now,
-      aiParserVersion: "jm-v32-7-final-operacional-ux10",
+      aiParserVersion: "jm-v32-7-2-login-deterministico",
       cliente: reviewed.customerName || reviewed.requester || reviewed.billingClient || "Cliente não informado",
       phone: reviewed.customerPhone || "",
       serviceType: reviewed.serviceType || "Seguradora",
@@ -4706,7 +4871,7 @@ Rota: ${url}`;
           tariffSummary: reviewed.tariffSummary,
           mapLinks: original.mapLinks || [],
           rawText: draft.rawText || "",
-          parserVersion: "jm-v32-7-final-operacional-ux10"
+          parserVersion: "jm-v32-7-2-login-deterministico"
         },
         rawPayload: draft.rawText || "",
         payload: Object.assign({}, original, reviewed),

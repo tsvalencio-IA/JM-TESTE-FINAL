@@ -7,7 +7,7 @@
 }(typeof globalThis !== "undefined" ? globalThis : this, function () {
   "use strict";
 
-  const VERSION = "jm-v32-7-final-operacional-ux10";
+  const VERSION = "jm-v32-7-2-login-deterministico";
   const STATE_NAMES = {
     acre: "AC", alagoas: "AL", amapa: "AP", amazonas: "AM", bahia: "BA", ceara: "CE",
     "distrito federal": "DF", "espirito santo": "ES", goias: "GO", maranhao: "MA",
