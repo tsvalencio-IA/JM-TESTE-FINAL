@@ -9,4 +9,4 @@ O arquivo `js/final-ux.js` mantinha um `MutationObserver` global no `document.bo
 - Observer dinâmico foi limitado ao painel da aplicação.
 - Atualizações foram agrupadas com `requestAnimationFrame`.
 - Login, perfis, Firebase, Firestore Rules e RTDB Rules foram preservados.
-- Cache unificado em `jm-v32-7-3-login-sem-travamento`.
+- Cache unificado em `jm-v32-7-4-motorista-assinatura-header`.

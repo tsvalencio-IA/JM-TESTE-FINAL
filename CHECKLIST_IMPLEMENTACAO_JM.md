@@ -238,3 +238,19 @@ Base usada: `JM-GUINCHOS-v32-6-fase2-status-checklist-evidencias`
 - ✅ Nenhuma regra Firestore ou RTDB foi alterada.
 - ✅ Teste automatizado `tests/login-gestor.test.js` incluído.
 - 🟨 Confirmar login real de `jm@jm.com` e `tsvalencio@gmail.com` após publicação.
+
+
+## Hotfix V32.7.4 — Motorista: assinatura e cabeçalho legível
+
+- ✅ A assinatura não foi removida; o fluxo de upload, `customerSignature` e `phaseSignatures` foi preservado.
+- ✅ Etapa final renomeada para **Finalização e assinatura**.
+- ✅ Atalho **Ir para assinatura** adicionado ao checklist.
+- ✅ Área de assinatura virou um cartão técnico visível, com estado Pendente/Pronta/Salva/Justificada.
+- ✅ Canvas redimensionado ao abrir a etapa, evitando área pequena ou aparentemente vazia.
+- ✅ Botão Ativar assinatura, limpeza, aceite textual e justificativa preservados.
+- ✅ Cabeçalho mobile reorganizado; botões não ficam mais amontoados no canto.
+- ✅ Conexão, atendimento e sincronização ficam em painel expansível legível.
+- ✅ Layout específico para 420 px ou menos, com ações em duas colunas e textos quebrando corretamente.
+- ✅ Nenhuma regra Firestore ou RTDB foi alterada.
+- ✅ Teste `tests/motorista-signature-header.test.js` incluído.
+- 🟨 Testar assinatura por toque em aparelho Android real após publicação.

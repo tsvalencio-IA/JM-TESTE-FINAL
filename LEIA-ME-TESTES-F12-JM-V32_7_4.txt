@@ -1,0 +1,159 @@
+JM GUINCHOS V32.7.4 — TESTE COMPLETO PELO F12
+
+IMPORTANTE
+- O comando "await JM_TESTE.run()" é somente leitura.
+- Os comandos do cenário E2E criam dados claramente marcados como TESTE_F12_.
+- Não use o cenário E2E durante um atendimento real.
+- O script não altera regras do Firebase.
+- O script não pede senha e não contém senha.
+- Execute em um repositório de teste.
+
+COMO CARREGAR O SCRIPT
+1. Abra o painel desejado.
+2. Faça login normalmente.
+3. Aperte F12.
+4. Abra a aba Console.
+5. Abra o arquivo JM_TESTE_COMPLETO_F12_V32_7_4.js no Bloco de Notas.
+6. Pressione Ctrl+A e Ctrl+C no arquivo.
+7. Cole UMA ÚNICA VEZ no Console e pressione Enter.
+8. Quando aparecer "JM_TESTE carregado", execute:
+   await JM_TESTE.run()
+
+TESTE SEGURO DO GESTOR
+Página:
+jm.html?v=jm-v32-7-4-motorista-assinatura-header
+
+Comando:
+await JM_TESTE.run()
+
+Esse teste verifica:
+- versão e cache;
+- Firebase;
+- painel e módulos;
+- permissões de leitura;
+- integrações;
+- Assistente IA com o caso R$ 807;
+- origem Tanabi e destino São José do Rio Preto;
+- rota OSRM/fallback;
+- preço manual;
+- pedágio;
+- financeiro, frota, equipe e manutenção presentes.
+
+TESTE SEGURO DO MOTORISTA
+Página:
+motorista.html?v=jm-v32-7-4-motorista-assinatura-header
+
+Login:
+moto@jm.com
+
+Comando:
+await JM_TESTE.run()
+
+Esse teste verifica:
+- perfil;
+- chamados por driverId;
+- GPS;
+- RTDB público;
+- Cloudinary público;
+- atendimento ativo;
+- checklist;
+- avarias;
+- fotos;
+- áudios;
+- assinatura;
+- despesas;
+- mapa.
+
+TESTE SEGURO DO SUPERADMIN
+Página:
+superadmin.html?v=jm-v32-7-4-motorista-assinatura-header
+
+Comando:
+await JM_TESTE.run()
+
+Esse teste verifica:
+- empresa/equipe;
+- Tracker RAFA;
+- múltiplos rastreadores;
+- Cloudinary;
+- GPS/RTDB;
+- provedores;
+- veículos.
+
+FLUXO E2E COMPLETO
+
+ETAPA 1 — GESTOR
+No jm.html, carregue o script e execute:
+await JM_TESTE.run()
+await JM_TESTE.createScenario()
+
+Isso cria um chamado TESTE vinculado ao Miller, com:
+- valor R$ 807,00;
+- origem Tanabi;
+- destino São José do Rio Preto;
+- status Despachado.
+
+ETAPA 2 — MOTORISTA
+Abra motorista.html com moto@jm.com.
+Carregue o MESMO script.
+Execute na ordem:
+
+await JM_TESTE.run()
+await JM_TESTE.selectTestCall()
+await JM_TESTE.liveGps()
+
+Quando o Chrome pedir localização, clique em Permitir.
+Espere o resultado do RTDB.
+
+Depois:
+await JM_TESTE.driverExpense()
+await JM_TESTE.driverStatus()
+await JM_TESTE.stopGps()
+
+ETAPA 3 — GESTOR
+Volte ao jm.html.
+Carregue novamente o script, caso tenha atualizado a página.
+Execute:
+
+await JM_TESTE.verifyScenario()
+
+Ele verifica:
+- chamado persistente;
+- motorista vinculado;
+- valor R$ 807,00;
+- status atualizado;
+- despesa recebida;
+- ponto GPS no RTDB.
+
+ETAPA 4 — LIMPEZA
+Depois de conferir tudo, no jm.html execute:
+
+await JM_TESTE.cleanup()
+
+Isso remove somente:
+- chamado TESTE_F12_;
+- despesas do mesmo testSuiteId;
+- transações/manutenções/provas de teste, se existirem;
+- GPS do chamado de teste.
+
+COMO INTERPRETAR
+✅ Verde: passou.
+⚠️ Amarelo: depende de configuração ou teste físico.
+❌ Vermelho: falhou.
+
+Quando houver falha:
+- não copie o Console inteiro;
+- envie somente a linha vermelha e as 5 linhas abaixo dela;
+- informe em qual página executou.
+
+COMANDOS RÁPIDOS
+await JM_TESTE.run()
+await JM_TESTE.createScenario()
+await JM_TESTE.selectTestCall()
+await JM_TESTE.liveGps()
+await JM_TESTE.stopGps()
+await JM_TESTE.driverExpense()
+await JM_TESTE.driverStatus()
+await JM_TESTE.verifyScenario()
+await JM_TESTE.cleanup()
+JM_TESTE.report()

@@ -1,8 +1,9 @@
 {
-  "version": "jm-v32-7-3-login-sem-travamento",
+  "version": "jm-v32-7-4-motorista-assinatura-header",
   "release": "V32.7.3 Hotfix Login Sem Travamento",
   "date": "2026-06-11",
   "multiempresa": false,
   "build": "2026-06-11-mutation-loop-hotfix",
-  "notes": "Corrige loop infinito do MutationObserver no painel gestor, adia melhorias pesadas até o painel abrir e preserva login, Firebase e regras existentes."
+  "notes": "Correção do cabeçalho mobile do motorista e restauração visual/funcional explícita da assinatura.",
+  "updatedAt": "2026-06-11T00:00:00-03:00"
 }

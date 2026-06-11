@@ -6,10 +6,10 @@
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
 <meta content="#07111f" name="theme-color"/>
 <title>JM Guinchos - Motorista</title>
-<link href="manifest.json?v=jm-v32-7-3-login-sem-travamento" rel="manifest"/>
+<link href="manifest.json?v=jm-v32-7-4-motorista-assinatura-header" rel="manifest"/>
 <link href="assets/icon.svg" rel="icon" type="image/svg+xml"/>
-<link href="css/style.css?v=jm-v32-7-3-login-sem-travamento" rel="stylesheet"/>
-<link href="css/final-ux.css?v=jm-v32-7-3-login-sem-travamento" rel="stylesheet"/>
+<link href="css/style.css?v=jm-v32-7-4-motorista-assinatura-header" rel="stylesheet"/>
+<link href="css/final-ux.css?v=jm-v32-7-4-motorista-assinatura-header" rel="stylesheet"/>
 </head>
 <body class="driver-field-mode">
 <section class="login" id="driverLoginView">
@@ -32,19 +32,29 @@
 </form>
 </section>
 <section class="hidden" id="driverAppView">
-<header class="topbar">
-<div>
-<h2 style="margin:0">Painel motorista</h2>
-<div class="muted small" id="driverUserBox"></div>
-<div class="driver-runtime-bar" id="driverRuntimeBar">
-<span class="driver-runtime-chip warn" id="driverNetworkStatus" role="status">Verificando conexão...</span>
-<span class="driver-runtime-chip muted" id="driverHeaderActiveCall">Nenhum atendimento selecionado</span>
-<span class="driver-runtime-chip muted" id="driverSyncStatus">Sem envios pendentes</span>
-</div></div>
-<div class="actions">
-<button class="btn primary" id="driverRefreshBtn">Atualizar</button>
-<button class="btn danger" id="driverLogoutBtn">Sair</button>
+<header class="topbar driver-topbar">
+<div class="driver-topbar-main">
+  <div class="driver-topbar-identity">
+    <h2>Painel motorista</h2>
+    <div class="muted small" id="driverUserBox"></div>
+  </div>
+  <div class="actions driver-topbar-actions">
+    <button class="btn primary" id="driverRefreshBtn" type="button">Atualizar</button>
+    <button class="btn danger" id="driverLogoutBtn" type="button">Sair</button>
+  </div>
 </div>
+<details class="driver-runtime-details" id="driverRuntimeDetails">
+  <summary>
+    <span class="driver-runtime-dot warn" id="driverRuntimeDot" aria-hidden="true"></span>
+    <span class="driver-runtime-summary" id="driverRuntimeSummary">Verificando conexão e atendimento...</span>
+    <span class="driver-runtime-toggle-label">Detalhes</span>
+  </summary>
+  <div class="driver-runtime-bar" id="driverRuntimeBar">
+    <span class="driver-runtime-chip warn" id="driverNetworkStatus" role="status">Verificando conexão...</span>
+    <span class="driver-runtime-chip muted" id="driverHeaderActiveCall">Nenhum atendimento selecionado</span>
+    <span class="driver-runtime-chip muted" id="driverSyncStatus">Sem envios pendentes</span>
+  </div>
+</details>
 </header>
 <main class="content">
 <div class="grid">
@@ -134,7 +144,10 @@
 <div class="proof-wizard" id="driverProofWizard">
   <div class="proof-wizard-head">
     <div><span class="driver-eyebrow">Checklist guiado</span><strong id="proofWizardTitle">1. Retirada</strong></div>
-    <span class="proof-wizard-counter" id="proofWizardCounter">Etapa 1 de 6</span>
+    <div class="proof-wizard-head-actions">
+      <span class="proof-wizard-counter" id="proofWizardCounter">Etapa 1 de 6</span>
+      <button class="btn signature-shortcut-btn" id="driverOpenSignatureBtn" type="button">Ir para assinatura</button>
+    </div>
   </div>
   <div class="proof-wizard-progress"><span id="proofWizardProgressFill"></span></div>
   <div class="proof-wizard-tabs" id="proofWizardTabs" role="tablist" aria-label="Etapas das provas"></div>
@@ -222,25 +235,37 @@
 <div class="wide proof-step-title">Áudios do atendimento</div>
 <div class="wide"><label>Áudios / observações de voz</label><input accept="audio/*" id="proofAudioFiles" multiple="" type="file"/></div>
 <p class="muted small wide">Você pode anexar mais de um áudio. Cada áudio será salvo como evidência do chamado, sem sobrescrever os anteriores.</p>
-<div><label>Assinatura referente à fase</label><select id="signaturePhase"><option value="retirada">Retirada / quem entregou o veículo</option><option value="entrega">Entrega / quem recebeu o veículo</option><option value="finalizacao">Finalização geral</option></select></div>
-<div><label>Nome do cliente final</label><input id="signatureCustomerName" placeholder="Quem está assinando"/></div>
-<div><label>Documento do cliente</label><input id="signatureCustomerDoc" inputmode="numeric" placeholder="CPF/RG se informado"/></div>
-<div class="wide">
-<label>Aceite textual</label>
-<textarea id="signatureAcceptedText">Declaro que acompanhei a remoção/entrega do veículo, conferi as condições registradas nas fotos e autorizo a JM Guinchos a usar este comprovante para fechamento do atendimento e faturamento.</textarea>
-</div>
-<div class="wide"><label>Justificativa se não houver assinatura</label><textarea id="signatureRefusalReason" placeholder="Preencha se o cliente não puder ou se recusar a assinar. Ex.: cliente ausente, seguradora autorizou sem assinatura, local de risco, entrega em pátio."></textarea></div>
-<div class="wide">
-<label>Assinatura na tela</label>
-<div class="signature-mode-toolbar">
-<button aria-pressed="false" class="btn primary" id="toggleSignatureModeBtn" type="button">Ativar assinatura</button>
-<span class="muted small" id="signatureModeHint">Com o modo desligado, você consegue rolar a tela passando o dedo sobre a área da assinatura.</span>
-</div>
-<canvas class="signature-pad" height="260" id="signatureCanvas" width="720"></canvas>
-<div class="actions" style="margin-top:8px">
-<button class="btn" id="clearSignatureBtn" type="button">Limpar assinatura</button>
-</div>
-</div>
+<section class="wide signature-capture-card" id="driverSignatureSection" aria-labelledby="driverSignatureTitle">
+  <div class="signature-card-head">
+    <div>
+      <span class="driver-eyebrow">Etapa obrigatória de fechamento</span>
+      <strong id="driverSignatureTitle">Assinatura do cliente ou justificativa</strong>
+      <small>Registre a assinatura na tela. Se o cliente não puder assinar, informe o motivo no campo de justificativa.</small>
+    </div>
+    <span class="signature-state-badge pending" id="signatureStateBadge">Pendente</span>
+  </div>
+  <div class="form-grid signature-capture-grid">
+    <div><label>Assinatura referente à fase</label><select id="signaturePhase"><option value="retirada">Retirada / quem entregou o veículo</option><option value="entrega">Entrega / quem recebeu o veículo</option><option value="finalizacao">Finalização geral</option></select></div>
+    <div><label>Nome do cliente final</label><input id="signatureCustomerName" placeholder="Quem está assinando"/></div>
+    <div><label>Documento do cliente</label><input id="signatureCustomerDoc" inputmode="numeric" placeholder="CPF/RG se informado"/></div>
+    <div class="wide">
+      <label>Aceite textual</label>
+      <textarea id="signatureAcceptedText">Declaro que acompanhei a remoção/entrega do veículo, conferi as condições registradas nas fotos e autorizo a JM Guinchos a usar este comprovante para fechamento do atendimento e faturamento.</textarea>
+    </div>
+    <div class="wide"><label>Justificativa se não houver assinatura</label><textarea id="signatureRefusalReason" placeholder="Preencha se o cliente não puder ou se recusar a assinar. Ex.: cliente ausente, seguradora autorizou sem assinatura, local de risco, entrega em pátio."></textarea></div>
+    <div class="wide signature-canvas-wrap">
+      <label>Assinatura na tela</label>
+      <div class="signature-mode-toolbar">
+        <button aria-pressed="false" class="btn primary" id="toggleSignatureModeBtn" type="button">Ativar assinatura</button>
+        <span class="muted small" id="signatureModeHint">Com o modo desligado, você consegue rolar a tela passando o dedo sobre a área da assinatura.</span>
+      </div>
+      <canvas class="signature-pad" height="260" id="signatureCanvas" width="720" aria-label="Área para assinatura do cliente"></canvas>
+      <div class="actions signature-actions">
+        <button class="btn" id="clearSignatureBtn" type="button">Limpar assinatura</button>
+      </div>
+    </div>
+  </div>
+</section>
 <div aria-live="polite" class="wide proof-submit-status info" id="driverProofStatus" role="status">Pronto para enviar. O sistema mostrará aqui cada etapa: validação, upload, salvamento e erro.</div>
 <div class="wide proof-wizard-actions">
   <button class="btn" id="driverProofPrevBtn" type="button">← Etapa anterior</button>
@@ -279,16 +304,16 @@
 </section>
 <footer aria-hidden="true" class="signature-footer"></footer>
 <div class="toast" id="toast"></div>
-<script src="js/config.firebase.js?v=jm-v32-7-3-login-sem-travamento"></script>
+<script src="js/config.firebase.js?v=jm-v32-7-4-motorista-assinatura-header"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-database-compat.js"></script>
-<script src="js/utils.js?v=jm-v32-7-3-login-sem-travamento"></script>
-<script src="js/firebase.js?v=jm-v32-7-3-login-sem-travamento"></script>
-<script src="js/google-maps.js?v=jm-v32-7-3-login-sem-travamento"></script>
-<script src="js/mapa.js?v=jm-v32-7-3-login-sem-travamento"></script>
-<script src="js/motorista.js?v=jm-v32-7-3-login-sem-travamento"></script>
-<script src="js/motorista-final-ux.js?v=jm-v32-7-3-login-sem-travamento"></script>
+<script src="js/utils.js?v=jm-v32-7-4-motorista-assinatura-header"></script>
+<script src="js/firebase.js?v=jm-v32-7-4-motorista-assinatura-header"></script>
+<script src="js/google-maps.js?v=jm-v32-7-4-motorista-assinatura-header"></script>
+<script src="js/mapa.js?v=jm-v32-7-4-motorista-assinatura-header"></script>
+<script src="js/motorista.js?v=jm-v32-7-4-motorista-assinatura-header"></script>
+<script src="js/motorista-final-ux.js?v=jm-v32-7-4-motorista-assinatura-header"></script>
 </body>
 </html>

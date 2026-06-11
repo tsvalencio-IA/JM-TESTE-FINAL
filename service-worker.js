@@ -1,4 +1,4 @@
-const CACHE_NAME = "jm-v32-7-3-login-sem-travamento";
+const CACHE_NAME = "jm-v32-7-4-motorista-assinatura-header";
 const ASSETS = [
   "./",
   "./index.html",

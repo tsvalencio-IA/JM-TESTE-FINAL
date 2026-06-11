@@ -1,0 +1,36 @@
+JM GUINCHOS V32.7.4 — VALIDAÇÃO
+
+Versão: jm-v32-7-4-motorista-assinatura-header
+
+VALIDAÇÕES CONCLUÍDAS
+- Todos os JavaScripts passaram em node --check.
+- Todos os JSONs são válidos.
+- Nenhum ID HTML duplicado nas páginas principais.
+- Todos os arquivos locais referenciados pelo Service Worker existem.
+- Testes do parser de seguradora aprovados.
+- Testes de geocodificação Brasil aprovados.
+- Testes de cache/versionamento aprovados.
+- Testes das fases do motorista aprovados.
+- Testes do login gestor aprovados.
+- Teste específico de assinatura e cabeçalho aprovado.
+- firestore.rules permanece idêntico à V32.7.3.
+- database.rules.json permanece idêntico à V32.7.3.
+
+ASSINATURA PRESERVADA
+- signatureCanvas presente.
+- Ativar/Limpar assinatura presentes.
+- Aceite textual e justificativa presentes.
+- Upload Cloudinary da assinatura preservado.
+- customerSignature e phaseSignatures preservados.
+- Atalho Ir para assinatura adicionado.
+- Canvas redimensionado quando a etapa fica visível.
+
+CABEÇALHO
+- Status não ficam mais amontoados no canto.
+- Conexão, atendimento e sincronização ficam em detalhes expansíveis.
+- Layout específico para telas até 420 px.
+
+TESTE EXTERNO NECESSÁRIO
+- Assinatura por toque em aparelho Android real.
+- Upload real no Cloudinary.
+- Login e dados autenticados no Firebase publicado.
