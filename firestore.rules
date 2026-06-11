@@ -9,8 +9,8 @@ service cloud.firestore {
     }
     function bootstrapAdminEmail() {
       return signedIn() && email() in [
-        'jm@jm.com.br',
-        'jm@jm.com'
+        'jm@jm.com',
+        'tsvalencio@gmail.com'
       ];
     }
     function profile() {

@@ -1,5 +1,5 @@
 JM GUINCHOS — ENTREGA FASE 2
-Versão: jm-v32-7-final-operacional-ux10
+Versão: jm-v32-7-2-login-deterministico
 Base: V32.5 Fase 1
 
 ESCOPO CONCLUÍDO

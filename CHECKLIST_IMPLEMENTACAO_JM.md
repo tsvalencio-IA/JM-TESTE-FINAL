@@ -1,6 +1,6 @@
 # CHECKLIST MESTRE — JM GUINCHOS V32.7 FINAL
 
-Versão consolidada: `jm-v32-7-final-operacional-ux10`
+Versão consolidada: `jm-v32-7-2-login-deterministico`
 
 Base usada: `JM-GUINCHOS-v32-6-fase2-status-checklist-evidencias`
 
@@ -17,7 +17,7 @@ Base usada: `JM-GUINCHOS-v32-6-fase2-status-checklist-evidencias`
 - ✅ Sintaxe validada em todos os JavaScripts.
 - ✅ Todos os JSONs validados.
 - ✅ Testes anteriores preservados.
-- ✅ Cache unificado em `jm-v32-7-final-operacional-ux10`.
+- ✅ Cache unificado em `jm-v32-7-2-login-deterministico`.
 - ✅ Manifesto da versão criado em `version.json`.
 
 ## Fase 1 — Atendimento ativo seguro do motorista
@@ -226,3 +226,15 @@ Base usada: `JM-GUINCHOS-v32-6-fase2-status-checklist-evidencias`
 - ⬜ SaaS multiempresa / multi-tenant.
 - ⬜ Backend privado para esconder token de rastreador do navegador do gestor.
 - ⬜ Publicação na Play Store.
+
+## Hotfix V32.7.1 — Login gestor/superadmin
+
+- ✅ Perfil `superadmin` incluído no conjunto de perfis de escritório do `jm.html`.
+- ✅ `tsvalencio@gmail.com` restaurado nas listas de bootstrap do frontend.
+- ✅ Botão Entrar mostra estado real: validando, credenciais aceitas, carregando perfil ou erro.
+- ✅ Autenticação e leitura do perfil possuem tempo limite; a tela não fica parada silenciosamente.
+- ✅ Falha temporária oferece `Tentar novamente` sem exigir nova senha.
+- ✅ Falha de autorização continua bloqueando acesso indevido.
+- ✅ Nenhuma regra Firestore ou RTDB foi alterada.
+- ✅ Teste automatizado `tests/login-gestor.test.js` incluído.
+- 🟨 Confirmar login real de `jm@jm.com` e `tsvalencio@gmail.com` após publicação.

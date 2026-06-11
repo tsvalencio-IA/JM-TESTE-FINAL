@@ -1,0 +1,47 @@
+JM GUINCHOS V32.7 — VALIDAÇÃO FINAL LOCAL
+
+VERSÃO
+jm-v32-7-2-login-deterministico
+
+APROVADO LOCALMENTE
+- Sintaxe de todos os arquivos JS
+- Parse de todos os JSONs
+- Teste real do parser da seguradora
+- Origem Tanabi/SP
+- Destino São José do Rio Preto/SP
+- Destino sem contaminação de Tanabi
+- Valor oficial R$ 807,00
+- Tarifas total R$ 807,00
+- Geocodificação restrita ao Brasil
+- Paraná/PR reconhecido
+- Resultado europeu rejeitado
+- GPS celular presente no painel
+- Configuração pública separada do token RAFA
+- Prancha de avarias com tipo e gravidade
+- Despesa rápida com confirmação e histórico
+- Central com ranking de veículos
+- Formulário em três etapas
+- Financeiro unificado e exportação CSV
+- Tabelas em cartões mobile
+- Minimização padronizada
+- Cache e arquivos do Service Worker
+- IDs HTML sem duplicidade
+- HTTP 200 para páginas e arquivos principais
+
+TESTES EXECUTADOS
+PASS insurance-parser.test.js
+PASS geocode-brasil.test.js
+PASS version-cache.test.js
+PASS phase1-motorista.test.js
+PASS phase2-motorista.test.js
+PASS final-phases.test.js
+ALL TESTS PASSED
+
+DEPENDE DE TESTE APÓS PUBLICAÇÃO
+- Login autenticado dos perfis reais
+- GPS físico do celular
+- Tracker RAFA real
+- Escrita/leitura RTDB
+- Upload Cloudinary
+- Assinatura touch Android
+- Atualização PWA instalada

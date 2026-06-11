@@ -1,4 +1,4 @@
-const CACHE_NAME = "jm-v32-7-final-operacional-ux10";
+const CACHE_NAME = "jm-v32-7-2-login-deterministico";
 const ASSETS = [
   "./",
   "./index.html",

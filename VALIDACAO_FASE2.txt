@@ -1,0 +1,46 @@
+JM GUINCHOS — VALIDAÇÃO LOCAL FASE 2
+Versão: jm-v32-7-2-login-deterministico
+Base comparada: JM-GUINCHOS-v32-5-fase1-motorista-campo-seguro
+
+VALIDAÇÕES APROVADAS
+- node --check em js/app.js
+- node --check em js/config.firebase.js
+- node --check em js/firebase.js
+- node --check em js/google-maps.js
+- node --check em js/insurance-parser.js
+- node --check em js/mapa.js
+- node --check em js/motorista.js
+- node --check em js/superadmin.js
+- node --check em js/toll-plazas.js
+- node --check em js/tracker.js
+- node --check em js/utils.js
+- node --check em service-worker.js
+- node --check em server.js
+- Todos os JSONs parseados com sucesso
+- IDs HTML sem duplicidade em index, jm, motorista, superadmin, cliente e relatório
+- insurance-parser.test.js aprovado
+- geocode-brasil.test.js aprovado
+- version-cache.test.js aprovado
+- phase1-motorista.test.js aprovado
+- phase2-motorista.test.js aprovado
+- Servidor HTTP local: páginas principais, JS, CSS e service worker responderam HTTP 200
+- firestore.rules preservado, SHA-256 62ae003f7a793f416942459b2b5ad1341b5a37fb04d1c41adb1291478786840c
+- database.rules.json preservado, SHA-256 93b6d4271941360a79db1ac061fdcc3428419da9c5071e731d941ee3c013d2c8
+
+ACEITE ESTÁTICO DA FASE 2
+- Fluxo de status oficial e bloqueio de salto presentes
+- Retorno de etapa com justificativa presente
+- Finalização condicionada a Entregue + provas completas/revisadas
+- Checklist de seis etapas presente
+- Rascunho por etapa presente
+- Prévia de fotos e áudios presente
+- Upload Cloudinary via XMLHttpRequest com progresso individual presente
+- Múltiplos áudios preservados com duração e bytes
+- Cache unificado em jm-v32-7-2-login-deterministico
+
+LIMITES HONESTOS DA VALIDAÇÃO LOCAL
+- Não foi realizado login real no Firebase neste ambiente.
+- Não foi enviado arquivo real ao Cloudinary neste ambiente.
+- Não foi testado toque/assinatura em aparelho Android físico.
+- Não foi executado GPS físico nem RTDB autenticado.
+Esses pontos estão marcados como 🟨 no checklist e precisam de teste após a publicação.

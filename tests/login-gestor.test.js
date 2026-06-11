@@ -1,0 +1,25 @@
+const fs = require('fs');
+const path = require('path');
+const assert = require('assert');
+const root = path.resolve(__dirname, '..');
+const app = fs.readFileSync(path.join(root, 'js/app.js'), 'utf8');
+const cfg = fs.readFileSync(path.join(root, 'js/config.firebase.js'), 'utf8');
+const html = fs.readFileSync(path.join(root, 'jm.html'), 'utf8');
+const rules = fs.readFileSync(path.join(root, 'firestore.rules'), 'utf8');
+
+assert(app.includes('const OFFICE_ROLES = ["admin", "superadmin"'), 'superadmin precisa ser perfil de escritório');
+assert(cfg.includes('"jm@jm.com"'), 'e-mail jm@jm.com precisa estar autorizado no frontend');
+assert(cfg.includes('"tsvalencio@gmail.com"'), 'e-mail do superadmin precisa estar no bootstrap do frontend');
+assert(!cfg.includes('jm@jm.com.br'), 'e-mail inexistente jm@jm.com.br não pode permanecer no frontend');
+assert(!rules.includes('jm@jm.com.br'), 'e-mail inexistente jm@jm.com.br não pode permanecer nas regras empacotadas');
+assert(html.includes('id="loginSubmit"'), 'botão de login deve ter id estável');
+assert(html.includes('id="loginStatus"'), 'login deve mostrar andamento');
+assert(html.includes('id="loginRetryProfile"'), 'login deve permitir tentar perfil novamente');
+assert(app.includes('auth.signInWithEmailAndPassword(email, password)'), 'autenticação por e-mail/senha precisa existir');
+assert(app.includes('auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)'), 'sessão precisa usar persistência local');
+assert(app.includes('async function completeGestorLogin'), 'conclusão do login deve estar centralizada');
+assert(app.includes("loginFormElement.onsubmit = handleGestorLoginSubmit"), 'submit precisa ter vínculo determinístico');
+assert(app.includes("await completeGestorLogin(credential.user, { force: true })"), 'não pode depender apenas do onAuthStateChanged para abrir o painel');
+assert(app.includes('[JM LOGIN] etapa 4/4 — painel gestor pronto'), 'fluxo precisa registrar conclusão explícita');
+assert(app.includes('Não desconectar automaticamente'), 'falha de perfil não deve encerrar a sessão silenciosamente');
+console.log('PASS login-gestor.test.js');

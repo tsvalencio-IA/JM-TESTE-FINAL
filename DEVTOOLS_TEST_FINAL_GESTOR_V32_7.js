@@ -1,7 +1,7 @@
 (async () => {
   "use strict";
   console.log("🧪 JM V32.7 — TESTE FINAL DO GESTOR");
-  const VERSION = "jm-v32-7-final-operacional-ux10";
+  const VERSION = "jm-v32-7-2-login-deterministico";
   const result = {};
   const pass = (name, value, detail) => {
     result[name] = { ok: !!value, detail: detail || "" };

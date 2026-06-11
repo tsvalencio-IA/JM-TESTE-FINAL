@@ -11,20 +11,24 @@
       "bytes": 14143
     },
     "CHECKLIST_IMPLEMENTACAO_JM.md": {
-      "sha256": "ac0f017b1e08441a00ab6015287ef76e863463e03e07a9fdddfc46ba565ef636",
-      "bytes": 9152
+      "sha256": "0d3d984a7d5a8f103ddb91f2d81ee14a3918112eff7e8159e599e097254adf04",
+      "bytes": 9912
     },
     "DEVTOOLS_TEST_FINAL_GESTOR_V32_7.js": {
-      "sha256": "e21b077abcf9a3fc8349fd0dc81967788586b6eac50fe16ffb61fee1bc369351",
+      "sha256": "37b0fc3d2bb549884ad6bbcf1da8a5c68d545a9278776bf5e6846a85c149b121",
       "bytes": 4359
     },
     "DEVTOOLS_TEST_FINAL_MOTORISTA_V32_7.js": {
-      "sha256": "ac68140a4a27ea457c9175502ce33f3fad6cb3c0fffcb0853ce0c3c2ffb6f265",
+      "sha256": "7e034793aee87333b6624bcf07028d3883768b80e479a013626492c3ff57b63f",
       "bytes": 3184
     },
     "DEVTOOLS_TEST_JM_GUINCHOS.js": {
       "sha256": "1d5c35b48ee34c668c40db6abb37760054d6035fb38244905a1e5818c7f809a4",
       "bytes": 2809
+    },
+    "DEVTOOLS_TEST_LOGIN_GESTOR_V32_7_1.js": {
+      "sha256": "4b57bc9815bc88a788ff9946a8ecfabb98306dbc8a462b0a52680e48c904f1a6",
+      "bytes": 1360
     },
     "DEVTOOLS_TEST_MOTORISTA_FASE1.js": {
       "sha256": "4b8bad971cd7313124408675afa5feee59cca6f1fb566116a9675c6645a69b97",
@@ -43,7 +47,7 @@
       "bytes": 1034
     },
     "ENTREGA_FASE2_STATUS_CHECKLIST_EVIDENCIAS.txt": {
-      "sha256": "7ac3b7c5047adf2cf34005ea0e97f2b39bad2ec0f695348053a03d26f10051fd",
+      "sha256": "996aa995b8e4d24f97cd3d95113a300415afcee56ebf53aea1f360f5f1131472",
       "bytes": 879
     },
     "ENTREGA_V16.md": {
@@ -66,8 +70,12 @@
       "sha256": "1617fd91a977a4b0a9f837ead036016c6a42db171335d9ea3c97d348649b2e83",
       "bytes": 1725
     },
+    "ENTREGA_V32_7_1_LOGIN_GESTOR_ESTAVEL.md": {
+      "sha256": "98f41adc6da92f9e9c4a74d1b575ff1d1573092a2d7dd92584c20a1f11ec43db",
+      "bytes": 1240
+    },
     "ENTREGA_V32_7_FINAL_OPERACIONAL.md": {
-      "sha256": "100580d0b024fcc52f37c7bec9f0027d4febbe2498c46175dea4e33b163244a4",
+      "sha256": "e057562de16081215f255fb2681cf1e3e53d14f4f484979ddf5bf8c8d87ab6e3",
       "bytes": 1156
     },
     "ENTREGA_V32_OPERACIONAL_SEGURADORAS_EVIDENCIAS.md": {
@@ -134,12 +142,16 @@
       "sha256": "3793096dd1c1681a9318abb46507ab230f26d6c7c5bdf6301bde442bcf302b59",
       "bytes": 930
     },
+    "MANIFESTO_SHA256_V32_7.json": {
+      "sha256": "ac1f7cc679b8ef32ba691f37c5eb0ba9ae2360e3d6d138ee1d3f1fed58246505",
+      "bytes": 16609
+    },
     "README.md": {
       "sha256": "b3b844603a127c9895c97a4811bafeba32113cca205d71449dae5a7375a58516",
       "bytes": 194
     },
     "README_JM_GUINCHOS.md": {
-      "sha256": "2cb102a151243e4f51e5c6f76b81d995103610b0007927b10b1ed5e5971c9e3a",
+      "sha256": "dde0a8a6e683928fb0fc206caecfc9577d1b7c4bc23df9d123b95cf1070ecf91",
       "bytes": 2495
     },
     "TUTORIAL_GABRIELA.html": {
@@ -151,11 +163,11 @@
       "bytes": 1386
     },
     "VALIDACAO_FASE2.txt": {
-      "sha256": "39f85d70a6e0d15cf07e59571577cd08644705ad6004c94ea2aea3a750ec3ca6",
+      "sha256": "09c3a0af16d43575733e87cfcc7da98903e76b706163af0a12ead6ae2c1e2e50",
       "bytes": 2065
     },
     "VALIDACAO_FINAL_V32_7.txt": {
-      "sha256": "d849064994e36a896074897af734b01443b948f63654dfcfaf2db459937636fb",
+      "sha256": "bfcb521f527c9271bcaeb25531e51ba392ce08d7d077452f39b7bfd51ac1c9e5",
       "bytes": 1319
     },
     "assets/icon.svg": {
@@ -251,7 +263,7 @@
       "bytes": 256
     },
     "cliente-chamado.html": {
-      "sha256": "252720be190c10262e1029c6ba04a502eda318e53734c78c827bcefe7dbb91dd",
+      "sha256": "0b713b97c1bd10b342207fdae4c57e46d7197f51b94df09be9f2d106ebe20f11",
       "bytes": 8592
     },
     "css/final-ux.css": {
@@ -279,23 +291,23 @@
       "bytes": 23002
     },
     "index.html": {
-      "sha256": "ad9b951983f95195aeeb16ee93251fe4274355e1010f5ced8e15f7dcc7e55d52",
+      "sha256": "88a815766f3ff5eceaccad37769812e872c0fca9af76ac4cb3a870180fadf5cf",
       "bytes": 1481
     },
     "jm.html": {
-      "sha256": "3027b7eb22f854db8251cfd82ef35739e07a32c02f2d2d172d57026381aa1056",
-      "bytes": 44445
+      "sha256": "b5e24dd419333ac79e7b71760d628dbfef9aabb710e0b13b3f2a6a559225394f",
+      "bytes": 44917
     },
     "js/app.js": {
-      "sha256": "62464a91518d60035456d581ea339d6b2d68cb75ff7595a36ebaaf0c5c0706e7",
-      "bytes": 293670
+      "sha256": "f121d3daf458ae81fa70899a18c9426174104000d5941c61bc4ced3258e94b92",
+      "bytes": 297223
     },
     "js/config.firebase.js": {
-      "sha256": "d24410a59dd3d6b37dc5296e344d41c3f09bdf65bb771836bf2e6cd0900c62c7",
-      "bytes": 2216
+      "sha256": "ca30d3f4852477ccaf963ab68459f44889a931e4ba23a9a53dee68f4d07707ff",
+      "bytes": 2276
     },
     "js/final-ux.js": {
-      "sha256": "6d8fdd2a1c059567c388d47694f18490a9bf119248ff82898ebbaddeb27e04cc",
+      "sha256": "ce393ba6d92bf38c67e48c42844e5f45e3c263bafcf354ef2881fb916814f8d4",
       "bytes": 28114
     },
     "js/firebase.js": {
@@ -307,7 +319,7 @@
       "bytes": 31582
     },
     "js/insurance-parser.js": {
-      "sha256": "18efa960b3663aa1d073457ab2120328496b7d2564689e3b689e39748688887e",
+      "sha256": "d1d3e372b211510038026c25ae5dbb920ebe93a0210575d851a97eab23aff28a",
       "bytes": 18518
     },
     "js/mapa.js": {
@@ -315,15 +327,15 @@
       "bytes": 20135
     },
     "js/motorista-final-ux.js": {
-      "sha256": "fd91a4609d935f82a8ad3c69519388de0f6255f83c06803582f4c2f6d551e0f8",
+      "sha256": "f115200440164588e5194d616e2c84f290d281cc277c984bdc2ee6aeca48f854",
       "bytes": 9802
     },
     "js/motorista.js": {
-      "sha256": "0b01c25030f6629ecd52cf1cda1f2a12ec355d0835eb4b3bdb8ad7f96fd73056",
+      "sha256": "7d216b1ed82252387916806f0c3f50bc74a87929de3a12400bd26fe1c840de85",
       "bytes": 144541
     },
     "js/superadmin-public-config.js": {
-      "sha256": "7b0cb3892d41c468e260597c097cee4a0d5ead8e6eba38cc2028a93b63a58a20",
+      "sha256": "5bc3e29b210319bd1bee92704a1ccd670c9aa1c406947ebe25559d8b2990c012",
       "bytes": 2137
     },
     "js/superadmin.js": {
@@ -347,7 +359,7 @@
       "bytes": 475
     },
     "motorista.html": {
-      "sha256": "d3a66d52c5410a6f8f24bf222bd6d72d916dd534c52188a2fcdc0b361e210eb3",
+      "sha256": "fad3f6d4a449ff15d9ce302e3d56b0deedff25d9096c8f306842d1823a213b48",
       "bytes": 23390
     },
     "package.json": {
@@ -359,7 +371,7 @@
       "bytes": 233
     },
     "relatorio.html": {
-      "sha256": "3b4781a185d06cf2bd16bc514fe635b98faf4d6e74b8aa6d735444bbda0de568",
+      "sha256": "5da5fb27b1b27b2b970973a53c658b06e795b05a2c76c36dc5b6a8a2c5867c72",
       "bytes": 12102
     },
     "server.js": {
@@ -367,11 +379,11 @@
       "bytes": 1377
     },
     "service-worker.js": {
-      "sha256": "09b89735c398eb4b0a027b7fcf85d754cd4230976236d8eda9fe37a7596ef196",
+      "sha256": "521bf2cf0bcfffc224b72ae5ade0a0b0e376871f72f28e1595a11c95cf5d2578",
       "bytes": 2378
     },
     "superadmin.html": {
-      "sha256": "b9879d885d81134ea682919300eaaf58d77e0f6a0429d26cb198e0c8ae119bc5",
+      "sha256": "949d531da287cdc7d5629abbbfa3b390454f3193eb3d3ecece3d61622a4f9510",
       "bytes": 12086
     },
     "tests/browser-smoke.html": {
@@ -379,7 +391,7 @@
       "bytes": 784
     },
     "tests/final-phases.test.js": {
-      "sha256": "992e3c1138778455706df6aaa313a0c25fe0810c6ef0413332dfccc3c144b849",
+      "sha256": "0a3b75b1738fe4f430511131fe67180efbf0e94e3f4690ededd35567d785d60d",
       "bytes": 4493
     },
     "tests/geocode-brasil.test.js": {
@@ -390,20 +402,24 @@
       "sha256": "587c32f531bd546ce7b5952a7f948a65278341185dce2b3a4b1c2b67ac752612",
       "bytes": 2783
     },
+    "tests/login-gestor.test.js": {
+      "sha256": "98943f99cb272fd615eed6cf57626fe92409a167d051b8f88362762f0f74ccf7",
+      "bytes": 1520
+    },
     "tests/phase1-motorista.test.js": {
-      "sha256": "61df45e6c591d4c4db37dc95d6493a1d79609a18da9656907a0b2f9ee5085ab3",
+      "sha256": "911e27b9fe5d8dc4ed28042bd73af70aa6744ce2b52b42dce7bb7d47d8cdd1af",
       "bytes": 2159
     },
     "tests/phase2-motorista.test.js": {
-      "sha256": "bfa7788e514c5b10ebbf186dba764ca5d8d47abf1425e48b754c4c003155072c",
+      "sha256": "919c89d2150d7981f358f5de1ba121281c867aa9c470e8e01b2a59b1b6865422",
       "bytes": 1856
     },
     "tests/run-all.js": {
-      "sha256": "50c18712e9635f639b18f3f60a0028b4bc7c7108a1fba4f6cf4ddbafab5a0015",
-      "bytes": 479
+      "sha256": "ff6fac6b3bf05984841ef986d8ffa6b0eb34d56775ee3e4424579431d551e302",
+      "bytes": 502
     },
     "tests/version-cache.test.js": {
-      "sha256": "e44295313a4d1c58fa81afdc6b7137cb2aed924be4728d1c0883eca65b5f5d85",
+      "sha256": "4d863566b312d7b52f1178f1723b6be97269743f8920a85976b7322bbe9d6578",
       "bytes": 808
     },
     "tutorial-assets/renders/01-login-gestao.png": {
@@ -435,8 +451,8 @@
       "bytes": 98811
     },
     "version.json": {
-      "sha256": "351ee91b75d386319a5b4b1e77fd75de08e9ab6e46766e13b4221b6f6b945fb6",
-      "bytes": 148
+      "sha256": "e4ad0d73a9c447a666791c42434d3b37a9a6bab706d7896f1e5021fd3e5f5b73",
+      "bytes": 310
     }
   }
 }

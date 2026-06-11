@@ -1,0 +1,56 @@
+JM GUINCHOS - VALIDACAO FASE 1
+Versao: jm-v32-5-fase1-motorista-campo-seguro
+
+1. NODE --CHECK
+OK js/app.js
+OK js/config.firebase.js
+OK js/firebase.js
+OK js/google-maps.js
+OK js/insurance-parser.js
+OK js/mapa.js
+OK js/motorista.js
+OK js/superadmin.js
+OK js/toll-plazas.js
+OK js/tracker.js
+OK js/utils.js
+OK service-worker.js
+OK DEVTOOLS_TEST_JM_GUINCHOS.js
+OK DEVTOOLS_TEST_MOTORISTA_V32_3.js
+OK DEVTOOLS_TEST_MOTORISTA_FASE1.js
+
+2. TESTES AUTOMATIZADOS
+PASS insurance-parser.test.js
+PASS geocode-brasil.test.js
+PASS version-cache.test.js
+PASS phase1-motorista.test.js
+ALL TESTS PASSED
+
+3. JSON
+OK BASE_OFICIAL_SHA256.json
+OK capacitor.config.json
+OK database.rules.json
+OK firebase.json
+OK manifest.json
+OK package.json
+OK railway.json
+
+4. REGRAS PRESERVADAS
+Firestore base: 62ae003f7a793f416942459b2b5ad1341b5a37fb04d1c41adb1291478786840c
+Firestore fase: 62ae003f7a793f416942459b2b5ad1341b5a37fb04d1c41adb1291478786840c
+RTDB base: 93b6d4271941360a79db1ac061fdcc3428419da9c5071e731d941ee3c013d2c8
+RTDB fase: 93b6d4271941360a79db1ac061fdcc3428419da9c5071e731d941ee3c013d2c8
+
+5. CRITERIOS ESTATICOS
+OK sem fallback silencioso em selectedCall
+OK sem selecao automatica no render
+OK painel atendimento atual
+OK navegacao de campo
+OK fallback RTDB
+
+6. HTTP LOCAL
+OK index.html 200
+OK jm.html 200
+OK motorista.html 200
+OK superadmin.html 200
+OK cliente-chamado.html 200
+OK relatorio.html 200

@@ -1,0 +1,3 @@
+NÃO É NECESSÁRIO PUBLICAR FIRESTORE RULES NEM REALTIME DATABASE RULES PARA CORRIGIR ESTE LOGIN.
+
+Suba somente os arquivos do site no GitHub de teste. Mantenha as regras que já estão funcionando na versão antiga.

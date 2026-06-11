@@ -1,6 +1,8 @@
 {
-  "version": "jm-v32-7-final-operacional-ux10",
-  "release": "V32.7 Final Operacional UX 10/10",
+  "version": "jm-v32-7-2-login-deterministico",
+  "release": "V32.7.1 Hotfix Login Gestor Estável",
   "date": "2026-06-11",
-  "multiempresa": false
+  "multiempresa": false,
+  "build": "2026-06-11-login-hotfix",
+  "notes": "Correção do login gestor/superadmin com feedback, timeout e recuperação sem alterar regras Firebase."
 }

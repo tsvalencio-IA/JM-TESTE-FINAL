@@ -1,0 +1,12 @@
+VALIDAÇÃO LOCAL V32.7.2
+
+- Sintaxe de todos os JavaScripts: aprovada
+- JSONs: válidos
+- Testes automatizados: ALL TESTS PASSED
+- E-mail inexistente jm@jm.com.br removido do frontend e documentação
+- Login usa persistência LOCAL
+- Login chama completeGestorLogin diretamente após autenticação
+- onAuthStateChanged permanece como restauração de sessão
+- Painel abre antes de iniciar listeners de dados
+- Falha de listener não retorna para a tela de login
+- Regras Firebase não precisam ser publicadas para este teste

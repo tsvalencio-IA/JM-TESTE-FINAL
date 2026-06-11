@@ -13,9 +13,9 @@ Esta entrega consolida as fases 0 a 18 do checklist de evolução, mantendo a ar
 
 ## URLs de teste
 
-- `jm.html?v=jm-v32-7-final-operacional-ux10`
-- `motorista.html?v=jm-v32-7-final-operacional-ux10`
-- `superadmin.html?v=jm-v32-7-final-operacional-ux10`
+- `jm.html?v=jm-v32-7-2-login-deterministico`
+- `motorista.html?v=jm-v32-7-2-login-deterministico`
+- `superadmin.html?v=jm-v32-7-2-login-deterministico`
 
 ## Atenção
 

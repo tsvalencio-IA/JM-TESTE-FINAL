@@ -1,0 +1,20 @@
+JM GUINCHOS V32.7.1 — VALIDAÇÃO LOCAL
+
+VERSÃO: jm-v32-7-2-login-deterministico
+
+CAUSAS CORRIGIDAS:
+- superadmin ausente de OFFICE_ROLES no jm.html/app.js.
+- tsvalencio@gmail.com ausente do bootstrap do frontend.
+- login sem feedback durante Authentication/Firestore.
+
+VALIDAÇÕES EXECUTADAS:
+- node --check em todos os JavaScripts: PASSOU.
+- todos os JSONs: VÁLIDOS.
+- testes anteriores: PASSARAM.
+- tests/login-gestor.test.js: PASSOU.
+- páginas e arquivos principais por HTTP local: 200.
+- firestore.rules: hash idêntico à V32.7.
+- database.rules.json: hash idêntico à V32.7.
+
+LIMITES:
+- credenciais reais, Firebase Authentication e dados de produção dependem do ambiente publicado.
