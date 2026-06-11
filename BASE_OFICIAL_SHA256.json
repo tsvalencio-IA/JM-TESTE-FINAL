@@ -1,0 +1,431 @@
+{
+  "base": "JM-GUINCHOS-v32-3-final-GABRIELA-COMPLETO.zip",
+  "generatedAt": "2026-06-11",
+  "files": [
+    {
+      "file": "DEVTOOLS_TEST_JM_GUINCHOS.js",
+      "size": 2809,
+      "sha256": "1d5c35b48ee34c668c40db6abb37760054d6035fb38244905a1e5818c7f809a4"
+    },
+    {
+      "file": "DEVTOOLS_TEST_MOTORISTA_V32_3.js",
+      "size": 1244,
+      "sha256": "3fda0145adc84ace1e4ce4c6dc8d14a1c5c00c0cab1265ccf18b89a828c39a6f"
+    },
+    {
+      "file": "ENTREGA_V16.md",
+      "size": 5882,
+      "sha256": "7b0175898f61b6b645ffde84c63751918d67533a00f2888f64309268f60d2434"
+    },
+    {
+      "file": "ENTREGA_V17_FLUXO_UNICO_FINANCEIRO.md",
+      "size": 2574,
+      "sha256": "651df7ff41305b18adf262843ae401c7904c08f8c39e4d61af264f6ae9944c16"
+    },
+    {
+      "file": "ENTREGA_V28_6_AI_CHAMADO_OFICIAL.md",
+      "size": 1632,
+      "sha256": "6e39042d64b56993351e79950017dc9501d8200fed5261085a3dbaa75050a141"
+    },
+    {
+      "file": "ENTREGA_V32_1_SENIOR_HOTFIX_MOTORISTA_EVIDENCIAS.md",
+      "size": 2823,
+      "sha256": "db7680e6e2ea06864da58b5bdc3f6018ce6ed58c0afcd349a1ea1b3fcdf1bec8"
+    },
+    {
+      "file": "ENTREGA_V32_3_FINAL_CONSOLIDADA.md",
+      "size": 1725,
+      "sha256": "1617fd91a977a4b0a9f837ead036016c6a42db171335d9ea3c97d348649b2e83"
+    },
+    {
+      "file": "ENTREGA_V32_OPERACIONAL_SEGURADORAS_EVIDENCIAS.md",
+      "size": 3753,
+      "sha256": "fa55a93eed6949a26d74da94ece2f397fa62702bfbdc360e953a75fbd61e8e8f"
+    },
+    {
+      "file": "INTEGRACOES_SEGURADORAS_BACKEND.md",
+      "size": 2189,
+      "sha256": "1219cad3ad5bea46236833b3ccaa4201b28c6f8b53e8059790777de37020da08"
+    },
+    {
+      "file": "LEIA-ME-ENTREGA-GABRIELA.txt",
+      "size": 1060,
+      "sha256": "be8b90d98193071e1b84c2b99f3061db706e956f9f90881c66d4afad207c7cfc"
+    },
+    {
+      "file": "LEIA-ME-V28-IA-SEGURADORAS-CHECKLIST-TEMA.txt",
+      "size": 2505,
+      "sha256": "5f43eba8c27e9a2e47796130d01ffe48834385d08f7f0194779a8364f0b835df"
+    },
+    {
+      "file": "LISTA_ARQUIVOS_ALTERADOS.txt",
+      "size": 325,
+      "sha256": "bda8e41abdb22ace63858620ce62b8b7753bc9ecc3b13aea1bba919663ab31ba"
+    },
+    {
+      "file": "LISTA_ARQUIVOS_ALTERADOS_V17.txt",
+      "size": 172,
+      "sha256": "8486ec15735d4a95d63dcb608ce423c50276c98d9045275bfb5bae1d4d18abce"
+    },
+    {
+      "file": "LISTA_ARQUIVOS_ALTERADOS_V28.txt",
+      "size": 251,
+      "sha256": "ac91a84e5a6f0b4650064bdc1fdcd72525a94ce4663db6cbc344a0cfe784de37"
+    },
+    {
+      "file": "LISTA_ARQUIVOS_ALTERADOS_V28_4.txt",
+      "size": 1228,
+      "sha256": "ad95ebabc3540731665356dc582019bd23597b033292f3db96f0ee7c91b8526e"
+    },
+    {
+      "file": "LISTA_ARQUIVOS_ALTERADOS_V28_5.txt",
+      "size": 1858,
+      "sha256": "421319d2353d609acfad889c4aff76bf4c1e20bcdcc567c7fe93afb1d2d50513"
+    },
+    {
+      "file": "LISTA_ARQUIVOS_ALTERADOS_V28_6.txt",
+      "size": 252,
+      "sha256": "b23ba202a5176774d96d9540e1c942a84d976f86809279e75aaed7077762105a"
+    },
+    {
+      "file": "LISTA_ARQUIVOS_ALTERADOS_V32.txt",
+      "size": 577,
+      "sha256": "29dde3e26b468295a7c3e69c6524463e6a5add4974ef4e2882c34de363fe35f4"
+    },
+    {
+      "file": "LISTA_ARQUIVOS_ALTERADOS_V32_1.txt",
+      "size": 223,
+      "sha256": "2e97492bddc191d9086f66b65f71e1a1e424f2d8bfe95771a3d33e51b2777f75"
+    },
+    {
+      "file": "LISTA_ARQUIVOS_ALTERADOS_V32_3.txt",
+      "size": 622,
+      "sha256": "c876abb27d232d0d5a658b3e69c6b87eb83626d44005e2948b4bc24277786806"
+    },
+    {
+      "file": "README.md",
+      "size": 194,
+      "sha256": "b3b844603a127c9895c97a4811bafeba32113cca205d71449dae5a7375a58516"
+    },
+    {
+      "file": "README_JM_GUINCHOS.md",
+      "size": 1521,
+      "sha256": "db64412b1a733ecaf676b5989237211fd5015e8e924be7e43a7498327ffd0eeb"
+    },
+    {
+      "file": "TUTORIAL_GABRIELA.html",
+      "size": 15624,
+      "sha256": "5dcbb8460490d5752a3a2b82f48741b35fbd251ab27d9c26e10894f957058b85"
+    },
+    {
+      "file": "assets/icon.svg",
+      "size": 542,
+      "sha256": "c91dfbbb8226ecd8f755ea08ded77767bd0efd8eee52e4d3fb41c2abaa5abe56"
+    },
+    {
+      "file": "assets/vehicle-icons/carsv2-map/arrow_base.png",
+      "size": 21152,
+      "sha256": "e8745f89af1dc71ce6247c5887d1dbd9e37ba8114ccaaf04fca9ac097efde382"
+    },
+    {
+      "file": "assets/vehicle-icons/carsv2-map/bicycle_base.png",
+      "size": 10948,
+      "sha256": "10834bb8b3dfef34e69d5457d09c55241a2115e64b0ec74dd396836361666a7e"
+    },
+    {
+      "file": "assets/vehicle-icons/carsv2-map/boat_base.png",
+      "size": 23672,
+      "sha256": "559f5a9bcf3e1d05a4ddb54c739f496f0be474a4beb2deaddb11c08a8b74eb9c"
+    },
+    {
+      "file": "assets/vehicle-icons/carsv2-map/bus_base.png",
+      "size": 9203,
+      "sha256": "21221b8cffbf6911d63af6a14998e3f831c2c6d3556c5b0fcb99e7086dadde9f"
+    },
+    {
+      "file": "assets/vehicle-icons/carsv2-map/caminhaoBau_base.png",
+      "size": 10768,
+      "sha256": "dc0d55d5e7ae0500532a814f6e1c9f547b06a4fad3038a456a468be52eaf61e8"
+    },
+    {
+      "file": "assets/vehicle-icons/carsv2-map/carroPasseio_base.png",
+      "size": 16945,
+      "sha256": "b67045921c4980f85067b0cc6e5fbc11f31261221afc474a5107b181f49e3fc4"
+    },
+    {
+      "file": "assets/vehicle-icons/carsv2-map/carroUtilitario_base.png",
+      "size": 24782,
+      "sha256": "a74e582999f5a63c7431139b71abb2bcb44d4320f2746f67c8873c09cf3fc19c"
+    },
+    {
+      "file": "assets/vehicle-icons/carsv2-map/crane_base.png",
+      "size": 23007,
+      "sha256": "5b72c765fde8219ff053e33c06c7bfd7ba20178162b36690516649147a8deef8"
+    },
+    {
+      "file": "assets/vehicle-icons/carsv2-map/default_base.png",
+      "size": 21152,
+      "sha256": "e8745f89af1dc71ce6247c5887d1dbd9e37ba8114ccaaf04fca9ac097efde382"
+    },
+    {
+      "file": "assets/vehicle-icons/carsv2-map/helicopter_base.png",
+      "size": 22317,
+      "sha256": "d68c9572381945ced5b658e6eebc33a3723b37a927ef83cd90965d868b16f38b"
+    },
+    {
+      "file": "assets/vehicle-icons/carsv2-map/motorcycle_base.png",
+      "size": 18387,
+      "sha256": "59473e553059f280c6c099d12c82e6b50dbbf0d8795a54799264d65447971b9d"
+    },
+    {
+      "file": "assets/vehicle-icons/carsv2-map/offroad_base.png",
+      "size": 26494,
+      "sha256": "966c0496f0e1be522d146c029fd5f8fd869bd1321f1be4d580af754a382cfba2"
+    },
+    {
+      "file": "assets/vehicle-icons/carsv2-map/person_base.png",
+      "size": 29098,
+      "sha256": "06e6ff0f2c1e744d3d83d94ea5f46d17016b680b2dfce1247662e6115e519c3f"
+    },
+    {
+      "file": "assets/vehicle-icons/carsv2-map/pet_base.png",
+      "size": 31795,
+      "sha256": "05203fdfaa514a165c157e1e02b19333fa15ec7eb1363b81290a2ac1652f76fe"
+    },
+    {
+      "file": "assets/vehicle-icons/carsv2-map/plane_base.png",
+      "size": 28408,
+      "sha256": "d312d39c730982aebbdadaa7d705fb3f1bcd34b3efc0671021fe9883115004f6"
+    },
+    {
+      "file": "assets/vehicle-icons/carsv2-map/scooter_base.png",
+      "size": 18351,
+      "sha256": "afd328a2b281b86bf0dda395d3bbb880fa9078aff21134374a266104a42af8ea"
+    },
+    {
+      "file": "assets/vehicle-icons/carsv2-map/ship_base.png",
+      "size": 16894,
+      "sha256": "bac9cab6acc76e45dc08701d482f2dcadacb69fe42cba7c648139f7e4f4dc24b"
+    },
+    {
+      "file": "assets/vehicle-icons/carsv2-map/tractor_base.png",
+      "size": 27600,
+      "sha256": "b9cb7b44ce81088ea0404c06adc71f216218e339f651fb5a19961e6083ec3d9a"
+    },
+    {
+      "file": "assets/vehicle-icons/carsv2-map/truckBau_base.png",
+      "size": 15449,
+      "sha256": "301b9164b6e9ebb5b7940e55b112a7a6399b91f2c78773bd814e87fcdf1edb9b"
+    },
+    {
+      "file": "assets/vehicle-icons/carsv2-map/truckCavalo_base.png",
+      "size": 18583,
+      "sha256": "2a857eb718fe386f945d7f0aa116132d18511d3caac3d82fc5eb1e1d7f364098"
+    },
+    {
+      "file": "assets/vehicle-icons/carsv2-map/vanUtilitario_base.png",
+      "size": 16313,
+      "sha256": "8b3bf859c097f6bb1e5d579eae41925f403d63740d723cf9067619862eeb37c5"
+    },
+    {
+      "file": "capacitor.config.json",
+      "size": 256,
+      "sha256": "5a79264896910f5b4b861a574d2b652fca4b07801f6a396a5a913d35b83e8f4e"
+    },
+    {
+      "file": "cliente-chamado.html",
+      "size": 8577,
+      "sha256": "aed3711b7765179ea9636254c7ceb3518d76e4f58fc65cd28a12440a226da5ad"
+    },
+    {
+      "file": "css/style.css",
+      "size": 48312,
+      "sha256": "49a827ce845ee2f8fac2a76388dd1ddf22dd1f78f80560340e14829e61cb7677"
+    },
+    {
+      "file": "database.rules.json",
+      "size": 2637,
+      "sha256": "93b6d4271941360a79db1ac061fdcc3428419da9c5071e731d941ee3c013d2c8"
+    },
+    {
+      "file": "firebase.json",
+      "size": 112,
+      "sha256": "e77167a75de2e3435e93c65215a587a6ecc03ec2feca63e1468255a9a253c3cf"
+    },
+    {
+      "file": "firestore.rules",
+      "size": 10229,
+      "sha256": "62ae003f7a793f416942459b2b5ad1341b5a37fb04d1c41adb1291478786840c"
+    },
+    {
+      "file": "formulario.html",
+      "size": 23002,
+      "sha256": "b2290669ce50e2cc43b8171c8f93fc913f85212de157bb259ab047444c24fd0c"
+    },
+    {
+      "file": "index.html",
+      "size": 1461,
+      "sha256": "a8a548be591c8b8b484c5c95bb381b4dd1cb60b069fcf45df3c6d6e900d77015"
+    },
+    {
+      "file": "jm.html",
+      "size": 44231,
+      "sha256": "8d00347f5fb154d09af4ef1066d36af9a828b232e92a90c5231fd7efc698c6f6"
+    },
+    {
+      "file": "js/app.js",
+      "size": 293480,
+      "sha256": "5b48d6c6329182eeeba884996455af0da8fede6d0f2bd11bc9aebd998f440971"
+    },
+    {
+      "file": "js/config.firebase.js",
+      "size": 2009,
+      "sha256": "ecb0a884802f5258ee649a79f3ca2d02ccb83419e9c39c399d4897ea0174edbc"
+    },
+    {
+      "file": "js/firebase.js",
+      "size": 2191,
+      "sha256": "46bdfcf3774037af15bcc792fc7960667ea8ddfea22d7767ea4fe124f3e05804"
+    },
+    {
+      "file": "js/google-maps.js",
+      "size": 31582,
+      "sha256": "29df3deeab6292fb5b956f046fe585115868d97c26c8bf7ce0e0bf536b293141"
+    },
+    {
+      "file": "js/insurance-parser.js",
+      "size": 18513,
+      "sha256": "a9be6db3a605c6503c32aa8839c6709a17b057925bdb98ac8550e0430c4ad9aa"
+    },
+    {
+      "file": "js/mapa.js",
+      "size": 20135,
+      "sha256": "eed802201c94cfe796b1b67e3b6b1b1bb322387ad3c781093d4d21f598fbf0bc"
+    },
+    {
+      "file": "js/motorista.js",
+      "size": 96560,
+      "sha256": "d8e0604bdcc000708cbb799b134c5cdda96f4f66eaf8520ed55a772642b7b8a3"
+    },
+    {
+      "file": "js/superadmin.js",
+      "size": 27807,
+      "sha256": "fa5bb1eae15ee985414843ec72d2270a2ea3bfe4989717172399902776d5d848"
+    },
+    {
+      "file": "js/toll-plazas.js",
+      "size": 722,
+      "sha256": "c62ee6a94599239ba19044d923351e189bc9b353d84a24a9b89ca853ba6ee837"
+    },
+    {
+      "file": "js/tracker.js",
+      "size": 15127,
+      "sha256": "9e0c9f0f04ce9938c88cf8db30d3b09103d4e091bebf60d46ea475e3bb1ceed2"
+    },
+    {
+      "file": "js/utils.js",
+      "size": 21326,
+      "sha256": "1cc37e482c3d8aa0002e915b2dc12fbeb07816f15cf0bf66c6310cf8cf7418b9"
+    },
+    {
+      "file": "manifest.json",
+      "size": 465,
+      "sha256": "99e422c10b7e513ca0252ab548ef1fcb1e1c02046b493d59640042356baea534"
+    },
+    {
+      "file": "motorista.html",
+      "size": 18351,
+      "sha256": "be66125d87c11f68db9c7631aa84e3afeb939a8c08def6e6217cd6105e34efc8"
+    },
+    {
+      "file": "package.json",
+      "size": 866,
+      "sha256": "ab267d3758194f9d4f8804f3868723b659596c3eb7933069e58be68cb9adba59"
+    },
+    {
+      "file": "railway.json",
+      "size": 233,
+      "sha256": "f006a44769dc8eb4972266c83c73bc2010863a09ef43f3f6c0c5eb5cd699cebc"
+    },
+    {
+      "file": "relatorio.html",
+      "size": 11941,
+      "sha256": "b83f78afaf740c7da4a6c821044eef3bc2460462ac520024937d9bb0a1490ca6"
+    },
+    {
+      "file": "server.js",
+      "size": 1377,
+      "sha256": "121cbf6d0b7cd1ce0327cf89d8da4f2b924ec0acc0d9ae052d7e8d65b534eb6c"
+    },
+    {
+      "file": "service-worker.js",
+      "size": 2109,
+      "sha256": "c44d0edf5ae3b801091ace13660fc6e33ebc72df245757ca24f8dbd586d622ed"
+    },
+    {
+      "file": "superadmin.html",
+      "size": 11883,
+      "sha256": "25b1df0c03eab0f1239fc04d8bd0bd202eea7e31d3803785f087dc3e7e1fed75"
+    },
+    {
+      "file": "tests/browser-smoke.html",
+      "size": 784,
+      "sha256": "93d0a05e91a14270f2597afb36fb88f1486dede91f21f4eaff17985906dc7f51"
+    },
+    {
+      "file": "tests/geocode-brasil.test.js",
+      "size": 2304,
+      "sha256": "cb7149093ec7945db14a46d886a4b17dd72f5ec7006b83122868ba28e9a2d8ae"
+    },
+    {
+      "file": "tests/insurance-parser.test.js",
+      "size": 2783,
+      "sha256": "587c32f531bd546ce7b5952a7f948a65278341185dce2b3a4b1c2b67ac752612"
+    },
+    {
+      "file": "tests/run-all.js",
+      "size": 401,
+      "sha256": "320a58c2dd57d830abbf58eae89cc328e337a4eed877109ac6b5c13ffaff80eb"
+    },
+    {
+      "file": "tests/version-cache.test.js",
+      "size": 803,
+      "sha256": "91baf9afcfc5f5e2949dd6c99f083423c7f35b4aa325bd2b5408a9b2b2153165"
+    },
+    {
+      "file": "tutorial-assets/renders/01-login-gestao.png",
+      "size": 94216,
+      "sha256": "6dc4538c58b49cba92d919a9c6707ebd030f79b52d313d4666701708db507329"
+    },
+    {
+      "file": "tutorial-assets/renders/02-central-operacional.png",
+      "size": 36097,
+      "sha256": "d9ed352d7f2aa38032930b5a3e3ceb23da315a67d3441fb2c9f4e01ae877f31e"
+    },
+    {
+      "file": "tutorial-assets/renders/03-novo-chamado-rota.png",
+      "size": 81698,
+      "sha256": "f5f9fcb7334bd312ae650a48f27b6b5e2a3307db50c57e3766eecaf9b4445687"
+    },
+    {
+      "file": "tutorial-assets/renders/04-assistente-ia.png",
+      "size": 36276,
+      "sha256": "217a3a085fc42086c7f1dec965bbe13adcc9051f45cd1d9b4b3e63a50e73ffa6"
+    },
+    {
+      "file": "tutorial-assets/renders/05-mapa-tracker.png",
+      "size": 21430,
+      "sha256": "410200914c3350ebc33b720b3bb8952245e8c84b502e2bd91204054537b340d2"
+    },
+    {
+      "file": "tutorial-assets/renders/06-financeiro.png",
+      "size": 36487,
+      "sha256": "99234a271117d72bb364806bf7b6ea10a70ceba9761c3e4e4e96067b0f2d6038"
+    },
+    {
+      "file": "tutorial-assets/renders/07-evidencias-motorista.png",
+      "size": 98811,
+      "sha256": "3c22a4d0463d41bca832aeb3f42237291a117e3f2973d3e166a7ec4cb8004685"
+    }
+  ]
+}

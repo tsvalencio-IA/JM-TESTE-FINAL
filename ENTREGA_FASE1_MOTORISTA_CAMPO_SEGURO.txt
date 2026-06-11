@@ -1,0 +1,26 @@
+JM GUINCHOS — FASE 1 MOTORISTA CAMPO SEGURO
+
+Base oficial: JM-GUINCHOS-v32-3-final-GABRIELA-COMPLETO.zip
+Versão: jm-v32-5-fase1-motorista-campo-seguro
+
+Implementado sem remover lógicas:
+- atendimento atual explícito e persistente;
+- nenhuma ação crítica usa automaticamente o primeiro chamado;
+- GPS celular sempre visível, com estados e vínculo obrigatório;
+- fallback RTDB restaurado;
+- modo de campo mobile com navegação inferior;
+- conexão e envios em andamento visíveis;
+- cache unificado em todos os arquivos.
+
+Regras Firebase:
+- firestore.rules preservado;
+- database.rules.json preservado.
+
+Teste real obrigatório após publicação:
+1. Entrar como moto@jm.com.
+2. Confirmar que nenhum chamado é selecionado sozinho.
+3. Selecionar conscientemente um chamado.
+4. Ligar GPS e conferir os três caminhos mobileGps no RTDB.
+5. Abrir jm.html e confirmar a posição no mapa.
+6. Trocar atendimento e confirmar que o watcher anterior foi parado.
+7. Lançar despesa e salvar prova somente no atendimento selecionado.

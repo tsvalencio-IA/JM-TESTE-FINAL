@@ -1,0 +1,26 @@
+JM GUINCHOS — ENTREGA FASE 2
+Versão: jm-v32-7-final-operacional-ux10
+Base: V32.5 Fase 1
+
+ESCOPO CONCLUÍDO
+- Fase 4: status operacional guiado.
+- Fase 5: checklist em seis etapas com rascunho.
+- Fase 6: fotos, áudios e assinaturas com prévia e progresso individual.
+
+ARQUIVOS OPERACIONAIS ALTERADOS
+- motorista.html
+- js/motorista.js
+- css/style.css
+- arquivos com versionamento/cache unificado
+- service-worker.js
+- tests/phase2-motorista.test.js
+- tests/run-all.js
+- CHECKLIST_IMPLEMENTACAO_JM.md
+
+REGRAS FIREBASE
+- firestore.rules preservado.
+- database.rules.json preservado.
+- Nenhuma coleção ou campo novo obrigatório foi criado.
+
+IMPORTANTE
+Os testes locais validam estrutura, sintaxe, regressão do parser/rota e presença das novas proteções. Upload real, toque/assinatura e transições autenticadas precisam ser confirmados no Firebase e Android publicados.

@@ -1,0 +1,27 @@
+ARQUIVOS ALTERADOS
+cliente-chamado.html
+css/style.css
+index.html
+jm.html
+js/app.js
+js/config.firebase.js
+js/insurance-parser.js
+js/motorista.js
+motorista.html
+relatorio.html
+service-worker.js
+superadmin.html
+tests/run-all.js
+tests/version-cache.test.js
+
+ARQUIVOS CRIADOS
+BASE_OFICIAL_SHA256.json
+CHECKLIST_IMPLEMENTACAO_JM.md
+DEVTOOLS_TEST_MOTORISTA_FASE1.js
+ENTREGA_FASE1_MOTORISTA_CAMPO_SEGURO.txt
+LISTA_ARQUIVOS_ALTERADOS_FASE1.txt
+VALIDACAO_FASE1.txt
+tests/phase1-motorista.test.js
+
+ARQUIVOS REMOVIDOS
+Nenhum

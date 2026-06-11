@@ -1,0 +1,40 @@
+JM GUINCHOS V32.7 — ARQUIVOS ALTERADOS EM RELAÇÃO À FASE 2
+
+Adicionados (12):
+- DEVTOOLS_TEST_FINAL_GESTOR_V32_7.js
+- DEVTOOLS_TEST_FINAL_MOTORISTA_V32_7.js
+- ENTREGA_V32_7_FINAL_OPERACIONAL.md
+- LISTA_ARQUIVOS_ALTERADOS_V32_7.txt
+- MANIFESTO_SHA256_V32_7.json
+- VALIDACAO_FINAL_V32_7.txt
+- css/final-ux.css
+- js/final-ux.js
+- js/motorista-final-ux.js
+- js/superadmin-public-config.js
+- tests/final-phases.test.js
+- version.json
+
+Alterados (21):
+- CHECKLIST_IMPLEMENTACAO_JM.md
+- ENTREGA_FASE2_STATUS_CHECKLIST_EVIDENCIAS.txt
+- README_JM_GUINCHOS.md
+- VALIDACAO_FASE2.txt
+- cliente-chamado.html
+- firestore.rules
+- index.html
+- jm.html
+- js/app.js
+- js/insurance-parser.js
+- js/motorista.js
+- manifest.json
+- motorista.html
+- package.json
+- relatorio.html
+- service-worker.js
+- superadmin.html
+- tests/phase1-motorista.test.js
+- tests/phase2-motorista.test.js
+- tests/run-all.js
+- tests/version-cache.test.js
+
+Removidos (0):

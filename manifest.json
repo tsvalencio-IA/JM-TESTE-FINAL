@@ -1,0 +1,19 @@
+{
+  "name": "JM Guinchos V32.7",
+  "short_name": "JM Guinchos",
+  "description": "Central operacional de guinchos, motoristas, frota, evidências e financeiro.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#07110f",
+  "theme_color": "#07110f",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "assets/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

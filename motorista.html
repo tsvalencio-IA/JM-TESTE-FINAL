@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="#07111f" name="theme-color"/>
+<title>JM Guinchos - Motorista</title>
+<link href="manifest.json?v=jm-v32-7-final-operacional-ux10" rel="manifest"/>
+<link href="assets/icon.svg" rel="icon" type="image/svg+xml"/>
+<link href="css/style.css?v=jm-v32-7-final-operacional-ux10" rel="stylesheet"/>
+<link href="css/final-ux.css?v=jm-v32-7-final-operacional-ux10" rel="stylesheet"/>
+</head>
+<body class="driver-field-mode">
+<section class="login" id="driverLoginView">
+<form class="login-card" id="driverLoginForm">
+<div class="brand-row">
+<div class="brand-mark">JM</div>
+<div>
+<h1>Motorista</h1>
+<p class="muted small">Chamados, rota e despesas</p>
+</div>
+</div>
+<label for="driverLoginEmail">E-mail</label>
+<input autocomplete="username" id="driverLoginEmail" required="" type="email"/>
+<div style="height:10px"></div>
+<label for="driverLoginPass">Senha</label>
+<input autocomplete="current-password" id="driverLoginPass" required="" type="password"/>
+<div style="height:14px"></div>
+<button class="btn primary" style="width:100%" type="submit">Entrar</button>
+<p class="danger small" id="driverLoginError" style="min-height:18px;margin-top:12px"></p>
+</form>
+</section>
+<section class="hidden" id="driverAppView">
+<header class="topbar">
+<div>
+<h2 style="margin:0">Painel motorista</h2>
+<div class="muted small" id="driverUserBox"></div>
+<div class="driver-runtime-bar" id="driverRuntimeBar">
+<span class="driver-runtime-chip warn" id="driverNetworkStatus" role="status">Verificando conexão...</span>
+<span class="driver-runtime-chip muted" id="driverHeaderActiveCall">Nenhum atendimento selecionado</span>
+<span class="driver-runtime-chip muted" id="driverSyncStatus">Sem envios pendentes</span>
+</div></div>
+<div class="actions">
+<button class="btn primary" id="driverRefreshBtn">Atualizar</button>
+<button class="btn danger" id="driverLogoutBtn">Sair</button>
+</div>
+</header>
+<main class="content">
+<div class="grid">
+<section class="panel col-12 driver-active-panel no-collapse" data-driver-section="atendimento" data-no-collapse="true" id="driverPanelActive">
+<h2>Atendimento atual</h2>
+<div class="driver-active-call-box" id="driverActiveCallBox">
+<div class="driver-empty-state">
+<strong>Nenhum atendimento selecionado</strong>
+<span>Escolha um chamado em “Meus chamados” antes de ligar GPS, alterar status, enviar provas ou lançar despesas.</span>
+</div>
+</div>
+<div class="driver-status-guide" id="driverStatusGuide" aria-live="polite">
+  <div class="driver-status-guide-head">
+    <div><span class="driver-eyebrow">Fluxo operacional</span><strong id="driverStatusGuideTitle">Selecione um atendimento</strong></div>
+    <span class="driver-status-counter" id="driverStatusGuideCounter">0/7</span>
+  </div>
+  <div class="driver-status-progress"><span id="driverStatusProgressFill"></span></div>
+  <div class="driver-status-steps" id="driverStatusSteps"></div>
+  <p class="muted small" id="driverStatusGuideHint">O sistema mostrará somente a próxima etapa válida e impedirá saltos acidentais.</p>
+</div>
+<div aria-label="Ações do atendimento atual" class="driver-active-actions">
+<button class="btn good" disabled="" id="driverActiveRouteBtn" type="button">Abrir rota interna</button>
+<button class="btn primary" disabled="" id="driverActiveStartRouteBtn" type="button">Iniciar deslocamento</button>
+<select aria-label="Novo status do atendimento" disabled="" id="driverQuickStatus">
+<option value="motorista_a_caminho">A caminho</option>
+<option value="motorista_no_local">No local</option>
+<option value="veiculo_carregado">Veículo carregado</option>
+<option value="em_transporte">Em transporte</option>
+<option value="entregue">Entregue</option>
+<option value="finalizado">Finalizar</option>
+</select>
+<button class="btn" disabled="" id="driverApplyStatusBtn" type="button">Atualizar status</button>
+<button class="btn danger" disabled="" id="driverClearActiveCallBtn" type="button">Trocar atendimento</button>
+</div>
+</section><section class="panel col-7" data-driver-section="atendimento" id="driverPanelCalls" style="--driver-order:2">
+<h2>Meus chamados</h2>
+<div id="driverCallsBox"></div>
+</section>
+<section class="panel col-5" data-driver-section="rota" data-mobile-gps-only="" id="driverPanelLocation" style="--driver-order:4">
+<h2>Localização do celular</h2><div class="driver-context-notice" data-context-notice="true">Selecione o atendimento atual para liberar este módulo.</div>
+<p class="muted small">O GPS só pode ser ligado depois que você selecionar conscientemente o atendimento atual. A central verá a posição vinculada ao chamado, motorista e veículo.</p>
+<div class="form-grid">
+<div><label>Chamado rastreado pelo celular</label><select aria-describedby="driverActiveCallBox" data-active-call-select="true" id="driverLocationCall"></select></div>
+<div><label>Veículo atual</label><select id="driverLocationVehicle"></select></div>
+<div class="wide actions">
+<button class="btn good" id="driverStartLocationBtn" type="button">Ativar localização</button>
+<button class="btn danger" id="driverStopLocationBtn" type="button">Parar localização</button>
+</div>
+<div class="wide small muted" id="driverLocationStatus">Verificando configuração, permissão e conexão do GPS do celular...</div>
+</div>
+</section>
+<section class="panel col-5" data-driver-section="despesas" id="driverPanelExpense" style="--driver-order:7">
+<h2>Lançar despesa</h2><div class="driver-context-notice" data-context-notice="true">Selecione o atendimento atual para liberar este módulo.</div>
+<div class="expense-quick-types" id="driverExpenseQuickTypes" aria-label="Categorias rápidas">
+<button type="button" data-expense-type="Combustível">Combustível</button>
+<button type="button" data-expense-type="Pedágio">Pedágio</button>
+<button type="button" data-expense-type="Alimentação">Alimentação</button>
+<button type="button" data-expense-type="Manutenção">Manutenção</button>
+<button type="button" data-expense-type="Outros">Outro</button>
+</div>
+<form class="form-grid" id="driverExpenseForm">
+<div class="wide"><label>Chamado</label><select aria-describedby="driverActiveCallBox" data-active-call-select="true" id="driverExpenseCall"></select></div>
+<div><label>Veículo</label><select id="driverExpenseVehicle"></select></div>
+<p class="small muted wide" id="driverExpenseContext">Escolha um chamado para puxar veículo, protocolo e seguradora automaticamente.</p>
+<div><label>Tipo</label><select id="driverExpenseType"><option>Combustível</option><option>Pedágio</option><option>Alimentação</option><option>Estacionamento</option><option>Manutenção</option><option>Outros</option></select></div>
+<div><label>Valor</label><input id="driverExpenseAmount" inputmode="decimal" required=""/></div>
+<div class="wide"><label>Comprovante/foto</label><input accept="image/*" capture="environment" id="driverExpensePhoto" type="file"/></div>
+<div class="wide"><label>Observação</label><textarea id="driverExpenseNotes"></textarea></div>
+<div class="wide expense-review" id="driverExpenseReview">Preencha tipo e valor para revisar antes de enviar.</div>
+<button class="btn good wide" id="driverExpenseSubmitBtn" type="submit">Enviar despesa</button>
+</form>
+<div class="driver-expense-history" id="driverExpenseHistory"><p class="muted small">As despesas recentes aparecerão aqui.</p></div>
+</section>
+<section class="panel col-5" data-driver-section="provas" id="driverPanelReport" style="--driver-order:6">
+<h2>Relatório do atendimento</h2><div class="driver-context-notice" data-context-notice="true">Selecione o atendimento atual para liberar este módulo.</div>
+<form class="form-grid" id="driverReportForm">
+<div class="wide"><label>Chamado</label><select aria-describedby="driverActiveCallBox" data-active-call-select="true" id="driverReportCall"></select></div>
+<div><label>Checklist</label><select id="driverReportChecklist"><option value="ok">Sem avarias aparentes</option><option value="avaria">Com avaria registrada</option><option value="recusa">Cliente recusou assinatura/foto</option></select></div>
+<div class="wide"><label>Foto/comprovante</label><input accept="image/*" capture="environment" id="driverReportPhoto" type="file"/></div>
+<div class="wide"><label>Observação</label><textarea id="driverReportNotes" placeholder="Resumo objetivo do atendimento"></textarea></div>
+<button class="btn primary wide" type="submit">Enviar relatório</button>
+</form>
+</section>
+<section class="panel col-7" data-driver-section="provas" id="driverPanelProofs" style="--driver-order:5">
+<h2>Finalização e provas do atendimento</h2><div class="driver-context-notice" data-context-notice="true">Selecione o atendimento atual para liberar este módulo.</div>
+<p class="muted small">Fluxo guiado em seis etapas. Nada foi removido: checklist, ficha técnica, avarias, fotos, áudios e assinaturas continuam salvos com a mesma rastreabilidade.</p>
+<div class="proof-wizard" id="driverProofWizard">
+  <div class="proof-wizard-head">
+    <div><span class="driver-eyebrow">Checklist guiado</span><strong id="proofWizardTitle">1. Retirada</strong></div>
+    <span class="proof-wizard-counter" id="proofWizardCounter">Etapa 1 de 6</span>
+  </div>
+  <div class="proof-wizard-progress"><span id="proofWizardProgressFill"></span></div>
+  <div class="proof-wizard-tabs" id="proofWizardTabs" role="tablist" aria-label="Etapas das provas"></div>
+  <div class="proof-wizard-summary" id="proofWizardSummary">Selecione o atendimento para carregar o progresso.</div>
+</div>
+<form class="form-grid proof-wizard-mode" id="driverProofForm">
+<div class="wide"><label>Chamado</label><select aria-describedby="driverActiveCallBox" data-active-call-select="true" id="driverProofCall"></select></div>
+<div><label>Retirada / chegada no veículo</label><select id="proofStageRetirada"><option value="pendente">Pendente</option><option value="ok">OK</option><option value="avaria">Avaria registrada</option><option value="justificado">Justificado sem foto completa</option></select></div>
+<div><label>Carregamento no caminhão</label><select id="proofStageCarregamento"><option value="pendente">Pendente</option><option value="ok">OK</option><option value="avaria">Avaria registrada</option><option value="justificado">Justificado sem foto completa</option></select></div>
+<div><label>Transporte</label><select id="proofStageTransporte"><option value="pendente">Pendente</option><option value="ok">OK</option><option value="intercorrencia">Intercorrência</option><option value="justificado">Justificado</option></select></div>
+<div><label>Entrega / descarga</label><select id="proofStageEntrega"><option value="pendente">Pendente</option><option value="ok">OK</option><option value="avaria">Avaria registrada</option><option value="justificado">Justificado sem foto completa</option></select></div>
+<div><label>Finalização</label><select id="proofStageFinalizacao"><option value="pendente">Pendente</option><option value="ok">OK</option><option value="recusa">Cliente recusou assinar</option><option value="justificado">Justificado</option></select></div>
+<div class="wide proof-phase-grid">
+<label>Justificativas por etapa</label>
+<textarea id="proofStageRetiradaJustification" placeholder="Retirada: descreva avaria, dificuldade, ausência do cliente ou motivo operacional."></textarea>
+<textarea id="proofStageCarregamentoJustification" placeholder="Carregamento: descreva condição antes/depois, avarias, recusa ou observação."></textarea>
+<textarea id="proofStageEntregaJustification" placeholder="Entrega: descreva condição antes/depois, local, responsável, recusa ou observação."></textarea>
+<textarea id="proofStageFinalizacaoJustification" placeholder="Finalização: use se não houver assinatura, se o cliente recusou ou se houve divergência."></textarea>
+</div>
+<div class="wide"><label>Observações do checklist</label><textarea id="proofChecklistNotes" placeholder="Descreva avarias, recusa, espera, dificuldade de acesso, diferença de placa ou qualquer ponto para faturamento."></textarea></div>
+<details class="wide proof-section" open="">
+<summary>Ficha técnica do veículo guinchado</summary>
+<div class="form-grid proof-inspection-grid">
+<div><label>Combustível</label><select id="proofFuelLevel"><option value="">Não informado</option><option>Reserva</option><option>1/4</option><option>1/2</option><option>3/4</option><option>Cheio</option></select></div>
+<div><label>Quilometragem / odômetro</label><input id="proofOdometer" inputmode="numeric" placeholder="Ex.: 128450"/></div>
+<div><label>Condição dos pneus</label><select id="proofTireCondition"><option value="">Não informado</option><option>Novos</option><option>Bons</option><option>Ruins</option><option>Péssimo</option></select></div>
+<div><label>Chave e documento no local?</label><select id="proofKeyDocument"><option value="">Não informado</option><option>Sim</option><option>Não</option><option>Parcial</option></select></div>
+<div><label>Veículo carregado?</label><select id="proofVehicleLoaded"><option value="">Não informado</option><option>Não</option><option>Sim</option><option>Parcialmente</option></select></div>
+<div><label>Fácil remoção?</label><select id="proofEasyRemoval"><option value="">Não informado</option><option>Sim</option><option>Não</option><option>Com restrição</option></select></div>
+<div class="wide"><label>Observações técnicas do veículo</label><textarea id="proofVehicleTechnicalNotes" placeholder="Altura, comprimento, carga, pessoa acompanhando, restrições do local, acessos e qualquer divergência."></textarea></div>
+</div>
+</details>
+<details class="wide proof-section" open="">
+<summary>Acessórios e equipamentos - marque S/N/A</summary>
+<p class="muted small">S = existe/está presente, N = não existe/não está presente, A = avaria ou irregularidade.</p>
+<div class="proof-accessories-grid" id="proofAccessoriesGrid"></div>
+</details>
+<details class="wide proof-section" open="">
+<summary>Responsáveis e assinaturas por fase</summary>
+<div class="form-grid proof-inspection-grid">
+<div><label>Quem entregou o veículo</label><input id="proofPickupResponsibleName" placeholder="Nome do responsável na retirada"/></div>
+<div><label>Documento de quem entregou</label><input id="proofPickupResponsibleDoc" inputmode="numeric" placeholder="CPF/RG se informado"/></div>
+<div><label>Quem recebeu o veículo</label><input id="proofDeliveryResponsibleName" placeholder="Nome do responsável na entrega"/></div>
+<div><label>Documento de quem recebeu</label><input id="proofDeliveryResponsibleDoc" inputmode="numeric" placeholder="CPF/RG se informado"/></div>
+</div>
+</details>
+<div class="wide proof-step-title">Mapa de avarias do veículo guinchado</div>
+<div>
+<label>Tipo do veículo do chamado</label>
+<select id="damageVehicleType">
+<option value="carro">Carro / utilitário</option>
+<option value="moto">Moto</option>
+<option value="caminhao">Caminhão / munck</option>
+<option value="outro">Outro</option>
+</select>
+</div>
+<div class="wide">
+<label>Toque nas partes com avaria</label>
+<div aria-label="Mapa de avarias do veículo" class="damage-diagram" id="damageDiagram"></div>
+<div aria-live="polite" class="damage-editor hidden" id="damageSelectedEditor"></div>
+<p class="muted small" id="damagePartsSummary"></p>
+</div>
+<div class="wide"><label>Descrição das avarias</label><textarea id="proofDamageDetails" placeholder="Ex.: risco na lateral direita, para-choque dianteiro trincado, pneu murcho, vidro quebrado."></textarea></div>
+<div class="wide proof-step-title">Antes de carregar: fotos do veículo no local</div>
+<div><label>Antes - frente</label><input accept="image/*" capture="environment" id="proofPhotoFront" type="file"/></div>
+<div><label>Antes - traseira</label><input accept="image/*" capture="environment" id="proofPhotoRear" type="file"/></div>
+<div><label>Antes - lateral direita</label><input accept="image/*" capture="environment" id="proofPhotoRight" type="file"/></div>
+<div><label>Antes - lateral esquerda</label><input accept="image/*" capture="environment" id="proofPhotoLeft" type="file"/></div>
+<div><label>Antes - painel / odômetro</label><input accept="image/*" capture="environment" id="proofPhotoDashboard" type="file"/></div>
+<div class="wide proof-step-title">Carregado no guincho</div>
+<div><label>Carregado no caminhão</label><input accept="image/*" capture="environment" id="proofPhotoLoadAfter" type="file"/></div>
+<div class="wide proof-step-title">Depois de descarregar: fotos do veículo na entrega</div>
+<div><label>Entrega - frente</label><input accept="image/*" capture="environment" id="proofPhotoDeliveryFront" type="file"/></div>
+<div><label>Entrega - traseira</label><input accept="image/*" capture="environment" id="proofPhotoDeliveryRear" type="file"/></div>
+<div><label>Entrega - lateral direita</label><input accept="image/*" capture="environment" id="proofPhotoDeliveryRight" type="file"/></div>
+<div><label>Entrega - lateral esquerda</label><input accept="image/*" capture="environment" id="proofPhotoDeliveryLeft" type="file"/></div>
+<div><label>Entrega - painel / odômetro</label><input accept="image/*" capture="environment" id="proofPhotoDeliveryDashboard" type="file"/></div>
+<div><label>Avarias</label><input accept="image/*" capture="environment" id="proofPhotoDamage" type="file"/></div>
+<div class="wide"><label>Comprovante final</label><input accept="image/*" capture="environment" id="proofPhotoFinal" type="file"/></div>
+<div class="wide proof-saved-evidence" id="proofSavedEvidenceSummary">
+  <strong>Evidências já salvas</strong>
+  <span class="muted small">Nenhuma evidência carregada para este atendimento.</span>
+</div>
+<div class="wide proof-upload-queue" id="proofUploadQueue" aria-live="polite"></div>
+<div class="wide proof-step-title">Áudios do atendimento</div>
+<div class="wide"><label>Áudios / observações de voz</label><input accept="audio/*" id="proofAudioFiles" multiple="" type="file"/></div>
+<p class="muted small wide">Você pode anexar mais de um áudio. Cada áudio será salvo como evidência do chamado, sem sobrescrever os anteriores.</p>
+<div><label>Assinatura referente à fase</label><select id="signaturePhase"><option value="retirada">Retirada / quem entregou o veículo</option><option value="entrega">Entrega / quem recebeu o veículo</option><option value="finalizacao">Finalização geral</option></select></div>
+<div><label>Nome do cliente final</label><input id="signatureCustomerName" placeholder="Quem está assinando"/></div>
+<div><label>Documento do cliente</label><input id="signatureCustomerDoc" inputmode="numeric" placeholder="CPF/RG se informado"/></div>
+<div class="wide">
+<label>Aceite textual</label>
+<textarea id="signatureAcceptedText">Declaro que acompanhei a remoção/entrega do veículo, conferi as condições registradas nas fotos e autorizo a JM Guinchos a usar este comprovante para fechamento do atendimento e faturamento.</textarea>
+</div>
+<div class="wide"><label>Justificativa se não houver assinatura</label><textarea id="signatureRefusalReason" placeholder="Preencha se o cliente não puder ou se recusar a assinar. Ex.: cliente ausente, seguradora autorizou sem assinatura, local de risco, entrega em pátio."></textarea></div>
+<div class="wide">
+<label>Assinatura na tela</label>
+<div class="signature-mode-toolbar">
+<button aria-pressed="false" class="btn primary" id="toggleSignatureModeBtn" type="button">Ativar assinatura</button>
+<span class="muted small" id="signatureModeHint">Com o modo desligado, você consegue rolar a tela passando o dedo sobre a área da assinatura.</span>
+</div>
+<canvas class="signature-pad" height="260" id="signatureCanvas" width="720"></canvas>
+<div class="actions" style="margin-top:8px">
+<button class="btn" id="clearSignatureBtn" type="button">Limpar assinatura</button>
+</div>
+</div>
+<div aria-live="polite" class="wide proof-submit-status info" id="driverProofStatus" role="status">Pronto para enviar. O sistema mostrará aqui cada etapa: validação, upload, salvamento e erro.</div>
+<div class="wide proof-wizard-actions">
+  <button class="btn" id="driverProofPrevBtn" type="button">← Etapa anterior</button>
+  <button class="btn primary" id="driverSaveProofDraftBtn" type="button">Salvar rascunho da etapa</button>
+  <button class="btn good" id="driverProofNextBtn" type="button">Próxima etapa →</button>
+  <button class="btn good hidden" id="driverSubmitProofBtn" type="submit">Concluir e salvar provas</button>
+</div>
+</form>
+</section>
+<section class="panel col-12" data-driver-section="rota" id="driverPanelMap" style="--driver-order:3">
+<h2>Mapa dos meus atendimentos</h2>
+<p class="muted small">O motorista visualiza somente os próprios chamados. A rota interna acompanha o GPS do celular quando ativado.</p>
+<div class="driver-route-status muted" id="driverRouteStatus">Selecione um chamado e toque em Ver rota no painel para focar o mapa interno.</div>
+<div class="map" id="driverMap"></div>
+</section>
+</div>
+</main>
+<dialog class="driver-confirm-dialog" id="driverStatusConfirmDialog">
+  <form method="dialog" class="driver-confirm-card">
+    <h2 id="driverStatusConfirmTitle">Confirmar alteração</h2>
+    <p id="driverStatusConfirmText" class="muted"></p>
+    <label for="driverStatusConfirmReason">Motivo / observação</label>
+    <textarea id="driverStatusConfirmReason" placeholder="Obrigatório ao voltar uma etapa; opcional nas demais confirmações."></textarea>
+    <div class="actions">
+      <button class="btn" id="driverStatusCancelBtn" value="cancel" type="button">Cancelar</button>
+      <button class="btn good" id="driverStatusConfirmBtn" value="confirm" type="button">Confirmar</button>
+    </div>
+  </form>
+</dialog>
+<nav aria-label="Navegação rápida do motorista" class="driver-field-nav" id="driverFieldNav">
+<button class="active" data-driver-target="driverPanelActive" type="button"><span>Atendimento</span></button>
+<button data-driver-target="driverPanelMap" type="button"><span>Rota / GPS</span></button>
+<button data-driver-target="driverPanelProofs" type="button"><span>Provas</span></button>
+<button data-driver-target="driverPanelExpense" type="button"><span>Despesas</span></button>
+</nav>
+</section>
+<footer aria-hidden="true" class="signature-footer"></footer>
+<div class="toast" id="toast"></div>
+<script src="js/config.firebase.js?v=jm-v32-7-final-operacional-ux10"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-database-compat.js"></script>
+<script src="js/utils.js?v=jm-v32-7-final-operacional-ux10"></script>
+<script src="js/firebase.js?v=jm-v32-7-final-operacional-ux10"></script>
+<script src="js/google-maps.js?v=jm-v32-7-final-operacional-ux10"></script>
+<script src="js/mapa.js?v=jm-v32-7-final-operacional-ux10"></script>
+<script src="js/motorista.js?v=jm-v32-7-final-operacional-ux10"></script>
+<script src="js/motorista-final-ux.js?v=jm-v32-7-final-operacional-ux10"></script>
+</body>
+</html>
