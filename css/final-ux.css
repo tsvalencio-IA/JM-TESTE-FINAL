@@ -87,7 +87,7 @@
 }
 
 
-/* V32.7.4 — cabeçalho legível e assinatura explícita do motorista */
+/* V32.7.6 — cabeçalho legível e assinatura explícita do motorista */
 #driverAppView .driver-topbar{
   display:block;
   height:auto;
@@ -174,4 +174,110 @@
   .driver-runtime-toggle-label{font-size:.62rem}
   .proof-wizard-head-actions{display:grid;grid-template-columns:auto minmax(0,1fr);width:100%}
   .signature-shortcut-btn{width:100%}
+}
+
+
+/* V32.7.5 — estabilização do painel motorista sem camada nova de JS */
+body.driver-field-mode #driverAppView {
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+body.driver-field-mode #driverAppView .content {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+body.driver-field-mode #driverAppView .grid,
+body.driver-field-mode #driverProofForm,
+body.driver-field-mode .form-grid {
+  min-width: 0;
+}
+body.driver-field-mode #driverAppView .panel,
+body.driver-field-mode #driverAppView input,
+body.driver-field-mode #driverAppView select,
+body.driver-field-mode #driverAppView textarea,
+body.driver-field-mode #driverAppView button {
+  max-width: 100%;
+}
+body.driver-field-mode #driverPanelLocation {
+  display: block !important;
+}
+body.driver-field-mode #driverPanelLocation.hidden {
+  display: block !important;
+}
+body.driver-field-mode #driverLocationStatus {
+  display: block;
+  overflow-wrap: anywhere;
+}
+body.driver-field-mode #driverSignatureSection {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+body.driver-field-mode #signatureCanvas {
+  display: block;
+  width: 100% !important;
+  max-width: 100%;
+  border: 1px dashed rgba(148,163,184,.75);
+  background: rgba(255,255,255,.96);
+  touch-action: pan-y;
+}
+body.driver-field-mode #signatureCanvas.is-signing {
+  touch-action: none;
+}
+@media (max-width: 760px) {
+  body.driver-field-mode #driverAppView .driver-topbar {
+    position: sticky;
+    top: 0;
+    z-index: 1200;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: visible;
+  }
+  body.driver-field-mode .driver-topbar-main {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  body.driver-field-mode #driverAppView .driver-topbar .driver-topbar-actions {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  body.driver-field-mode #driverAppView .driver-topbar .driver-topbar-actions .btn {
+    min-width: 0;
+    width: 100%;
+    min-height: 44px;
+  }
+  body.driver-field-mode .driver-runtime-details .driver-runtime-bar {
+    max-width: none;
+    grid-template-columns: 1fr;
+  }
+  body.driver-field-mode #driverAppView main.content {
+    padding: 12px 10px calc(112px + env(safe-area-inset-bottom));
+  }
+  body.driver-field-mode #driverAppView .grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  body.driver-field-mode #driverAppView .panel {
+    grid-column: 1 / -1 !important;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  body.driver-field-mode .driver-active-actions {
+    position: static;
+    grid-template-columns: 1fr;
+    margin: 12px 0 0;
+  }
+  body.driver-field-mode .proof-wizard-actions {
+    position: static;
+    grid-template-columns: 1fr;
+    margin-top: 10px;
+  }
+  body.driver-field-mode .driver-field-nav {
+    min-height: calc(74px + env(safe-area-inset-bottom));
+  }
 }

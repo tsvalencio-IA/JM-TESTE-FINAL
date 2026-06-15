@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  const VERSION = "jm-v32-7-4-motorista-assinatura-header";
+  const VERSION = "jm-v32-7-7-motorista-provas-fonte-unica";
   const motor = window.JM && window.JM.motorista;
   const utils = window.JM && window.JM.utils || {};
   if (!motor || !motor.state) return;
@@ -170,13 +170,25 @@
     setupDamageLegend();
     setupOfflineNotice();
     setupUpdateBanner();
-    const observer = new MutationObserver(() => {
+    // Estabilização V32.7.5: não observar o document.body inteiro.
+    // O observer global anterior podia criar ciclos de renderização e travar clique/campo no celular.
+    const safeRefresh = () => {
       renderExpenseHistory();
       expenseReview();
       setupDamageLegend();
+    };
+    ["driverProofCall", "driverExpenseCall", "driverExpenseType", "driverExpenseAmount", "driverExpenseNotes"].forEach((id) => {
+      const el = $(id);
+      if (!el || el.dataset.finalUxSafeRefresh === "true") return;
+      el.dataset.finalUxSafeRefresh = "true";
+      el.addEventListener("change", safeRefresh);
+      el.addEventListener("input", safeRefresh);
     });
-    observer.observe(document.body, { childList: true, subtree: true });
-    console.info("JM motorista UX final", VERSION);
+    window.addEventListener("jm:driver-state-updated", safeRefresh);
+    window.addEventListener("online", safeRefresh);
+    window.setTimeout(safeRefresh, 350);
+    window.setTimeout(safeRefresh, 1200);
+    console.info("JM motorista UX final", VERSION, "safe-refresh");
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", bootstrap, { once: true });

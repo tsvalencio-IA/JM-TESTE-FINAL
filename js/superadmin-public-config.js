@@ -1,6 +1,6 @@
 (function () {
   "use strict";
-  const VERSION = "jm-v32-7-4-motorista-assinatura-header";
+  const VERSION = "jm-v32-7-7-motorista-provas-fonte-unica";
   const jm = window.JM || {};
   const firebaseApi = jm.firebase;
   if (!firebaseApi || !firebaseApi.db || !firebaseApi.auth) return;

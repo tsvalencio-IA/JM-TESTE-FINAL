@@ -1936,3 +1936,21 @@ html[data-theme="light"] .proof-wizard-actions { background:rgba(255,255,255,.97
   .proof-wizard-actions { grid-template-columns:1fr; }
   .proof-wizard-actions #driverSaveProofDraftBtn, .proof-wizard-actions #driverSubmitProofBtn { grid-column:auto; }
 }
+
+
+/* V32.7.5 - Motorista simples: pendências clicáveis e foco direto */
+.driver-proof-missing-box{display:grid;gap:10px;margin:12px 0;padding:12px;border:1px solid var(--line);border-radius:14px;background:rgba(245,158,11,.08);}
+.driver-proof-missing-box:empty{display:none;}
+.driver-proof-missing-title{display:flex;align-items:center;justify-content:space-between;gap:8px;font-weight:800;}
+.driver-proof-missing-title span{font-size:.78rem;color:var(--muted);font-weight:700;}
+.driver-proof-missing-actions{display:grid;gap:8px;}
+.driver-proof-missing-actions button{width:100%;text-align:left;border:1px solid rgba(245,158,11,.35);background:rgba(245,158,11,.12);color:var(--text);border-radius:12px;padding:12px;font-weight:800;min-height:48px;}
+.driver-proof-missing-actions button small{display:block;margin-top:3px;color:var(--muted);font-weight:600;}
+.driver-proof-focus-pulse{outline:3px solid rgba(245,158,11,.95)!important;box-shadow:0 0 0 6px rgba(245,158,11,.18)!important;border-radius:12px;transition:outline .2s,box-shadow .2s;}
+.driver-proof-simple-note{padding:10px 12px;border-radius:12px;background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.25);font-weight:700;}
+@media(max-width:640px){.driver-proof-missing-box{margin:10px 0 14px;padding:10px}.driver-proof-missing-title{display:block}.proof-wizard-tabs{grid-template-columns:repeat(3,1fr)}.proof-wizard-tab span{font-size:.72rem}.driver-active-actions{gap:8px}.driver-active-actions .btn,.driver-active-actions select{min-height:48px;font-size:1rem}}
+
+/* V32.7.6 — pendências completas e legíveis para motorista */
+.driver-proof-missing-summary{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 10px}
+.driver-proof-missing-summary span{border:1px solid rgba(148,163,184,.35);border-radius:999px;padding:5px 8px;font-size:12px;background:rgba(15,23,42,.55)}
+.driver-proof-missing-actions button b{display:block;font-size:11px;opacity:.75;margin-bottom:2px;text-transform:uppercase;letter-spacing:.02em}

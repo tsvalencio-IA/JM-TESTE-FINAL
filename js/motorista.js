@@ -4,7 +4,7 @@
   const { $, esc, parseMoney, toast, statusClass, routeKm, mapsRouteUrl, statusKey, statusLabel, isFinalStatus, setupCollapsiblePanels, pointFrom } = window.JM.utils;
   const { auth, db, arrayUnion, getRealtimeDb, rtdbKey } = window.JM.firebase;
   const cfg = window.JM_CONFIG || {};
-  const DRIVER_FLOW_VERSION = "jm-v32-7-4-motorista-assinatura-header";
+  const DRIVER_FLOW_VERSION = "jm-v32-7-7-motorista-provas-fonte-unica";
   const state = {
     user: null,
     profile: null,
@@ -460,15 +460,10 @@
   }
 
   function proofStepCompleted(call, stepKey) {
-    const checklist = call && call.proofChecklist || {};
-    if (stepKey === "inspecao") {
-      const inspection = checklist.vehicleInspection || {};
-      return !!(inspection.fuelLevel || inspection.odometer || inspection.tireCondition || (checklist.damageAssessment && checklist.damageAssessment.parts && checklist.damageAssessment.parts.length) || ["front", "rear", "right", "left", "dashboard"].some((type) => hasPhotoType(call, type)));
-    }
-    const phase = (PROOF_WIZARD_STEPS.find((step) => step.key === stepKey) || {}).phase;
-    return !!(phase && checklist[phase] && checklist[phase].status && checklist[phase].status !== "pendente");
+    if (!call) return false;
+    const validation = validateCompleteProofPackage(call, call.proofChecklist || {});
+    return !validation.missing.some((item) => item.step === stepKey);
   }
-
   function renderProofWizard() {
     const call = selectedCall();
     const maxIndex = PROOF_WIZARD_STEPS.length - 1;
@@ -517,6 +512,7 @@
         renderSignatureState(call);
       }, 40);
     }
+    renderProofMissingBox(call);
     if (call) {
       try { localStorage.setItem(proofWizardStorageKey(call.id), String(state.proofWizardStep)); } catch (_) {}
     }
@@ -629,7 +625,7 @@
     const photos = proofPhotos(call);
     const audios = proofAudios(call);
     const signatures = Object.values(call.phaseSignatures || {}).filter(Boolean).length + (call.customerSignature ? 1 : 0);
-    box.innerHTML = `<strong>Evidências já salvas</strong><div class="proof-saved-stats"><span>${photos.length} foto(s)</span><span>${audios.length} áudio(s)</span><span>${signatures} assinatura(s)/aceite(s)</span><span>Status: ${esc(call.proofStatus || proofStatusFor(call))}</span></div>`;
+    box.innerHTML = `<strong>Evidências já salvas</strong><div class="proof-saved-stats"><span>${photos.length} foto(s)</span><span>${audios.length} áudio(s)</span><span>${signatures} assinatura(s)/aceite(s)</span><span>Status: ${esc(proofStatusFor(call))}</span></div>`;
   }
 
   function getMediaDuration(file) {
@@ -1028,13 +1024,17 @@
     return ["retirada", "entrega", "finalizacao"].every((phase) => phaseAccepted(call, phase));
   }
 
+  function validateCompleteProofPackage(call, checklist) {
+    const merged = Object.assign({}, call || {}, { proofChecklist: checklist || call && call.proofChecklist || {} });
+    const missing = proofMissingItems(merged, merged.proofChecklist, { includeSelectedFiles: false });
+    return { ok: missing.length === 0, missing };
+  }
+
   function proofStatusFor(call) {
     if (!call) return "pendente";
-    const checklist = call.proofChecklist || {};
-    const requiredPhotos = requiredProofPhotosForChecklist(checklist);
-    const missingPhotos = requiredPhotos.filter((photo) => !hasPhotoType(call, photo.key)).length;
-    if (missingPhotos === 0 && hasCompleteChecklist(call) && hasOperationalPhaseAcceptances(call)) return "completo";
-    if (proofPhotos(call).length || proofAudios(call).length || call.proofChecklist || call.customerSignature) return "parcial";
+    const validation = validateCompleteProofPackage(call, call.proofChecklist || {});
+    if (validation.ok) return "completo";
+    if (proofPhotos(call).length || proofAudios(call).length || call.proofChecklist || call.customerSignature || call.phaseSignatures) return "parcial";
     return "pendente";
   }
 
@@ -1103,7 +1103,7 @@
   }
 
   function proofBadge(call) {
-    const status = call && (call.proofStatus || proofStatusFor(call)) || "pendente";
+    const status = call ? proofStatusFor(call) : "pendente";
     const cls = status === "revisado" || status === "completo" ? "ok" : status === "parcial" ? "warn" : "danger";
     return `<span class="badge ${cls}">Provas: ${esc(status)}</span>`;
   }
@@ -1247,6 +1247,133 @@
       try { box.scrollIntoView({ behavior: "smooth", block: "nearest" }); } catch (_) {}
     }
     if (alsoToast !== false) toast(message, kind === "success" ? "ok" : kind);
+  }
+
+
+  function selectedProofPhotoKeys() {
+    return REQUIRED_PHOTOS.filter((photo) => {
+      const input = $(photo.input);
+      return !!(input && input.files && input.files[0]);
+    }).map((photo) => photo.key);
+  }
+
+  function proofMissingItems(call, checklist, options) {
+    options = options || {};
+    const items = [];
+    if (!call) return [{ label: "Selecionar atendimento", hint: "Escolha um chamado primeiro.", target: "driverPanelCalls", step: "retirada", group: "Atendimento" }];
+    const currentChecklist = checklist || collectProofChecklist(call);
+    PROOF_STAGES.forEach((stage) => {
+      const row = currentChecklist[stage] || {};
+      const cfg = PROOF_STAGE_FIELDS[stage] || {};
+      const step = PROOF_WIZARD_STEPS.find((s) => s.phase === stage)?.key || "retirada";
+      if (!row.status || row.status === "pendente") {
+        items.push({ label: "Marcar " + (cfg.label || stage), hint: "Informe a situação desta etapa.", target: cfg.select, step, group: cfg.label || stage });
+      }
+      if (["avaria", "intercorrencia", "recusa", "justificado"].includes(String(row.status || "")) && cfg.justification && !String(row.justificativa || "").trim()) {
+        items.push({ label: "Justificar " + (cfg.label || stage), hint: "Explique o motivo para a central e para o relatório.", target: cfg.justification, step, group: cfg.label || stage });
+      }
+    });
+    const inspection = currentChecklist.vehicleInspection || {};
+    const requiredFields = [
+      { label: "Responsável pela retirada", hint: "Informe quem entregou o veículo.", target: "proofPickupResponsibleName", step: "retirada", value: inspection.pickupResponsible && inspection.pickupResponsible.name, group: "Retirada" },
+      { label: "Documento da retirada", hint: "Informe CPF/RG de quem entregou.", target: "proofPickupResponsibleDoc", step: "retirada", value: inspection.pickupResponsible && inspection.pickupResponsible.document, group: "Retirada" },
+      { label: "Combustível", hint: "Selecione o nível de combustível.", target: "proofFuelLevel", step: "inspecao", value: inspection.fuelLevel, group: "Inspeção" },
+      { label: "Quilometragem", hint: "Digite o odômetro.", target: "proofOdometer", step: "inspecao", value: inspection.odometer, group: "Inspeção" },
+      { label: "Condição dos pneus", hint: "Selecione a condição dos pneus.", target: "proofTireCondition", step: "inspecao", value: inspection.tireCondition, group: "Inspeção" },
+      { label: "Chave e documento", hint: "Informe se estão no local.", target: "proofKeyDocument", step: "inspecao", value: inspection.keyDocument, group: "Inspeção" },
+      { label: "Veículo carregado", hint: "Informe se o veículo já foi carregado.", target: "proofVehicleLoaded", step: "inspecao", value: inspection.vehicleLoaded, group: "Inspeção" },
+      { label: "Facilidade de remoção", hint: "Informe se a remoção foi fácil ou teve restrição.", target: "proofEasyRemoval", step: "inspecao", value: inspection.easyRemoval, group: "Inspeção" },
+      { label: "Responsável pela entrega", hint: "Informe quem recebeu o veículo.", target: "proofDeliveryResponsibleName", step: "entrega", value: inspection.deliveryResponsible && inspection.deliveryResponsible.name, group: "Entrega" },
+      { label: "Documento da entrega", hint: "Informe CPF/RG de quem recebeu.", target: "proofDeliveryResponsibleDoc", step: "entrega", value: inspection.deliveryResponsible && inspection.deliveryResponsible.document, group: "Entrega" }
+    ];
+    requiredFields.forEach((field) => { if (!String(field.value || "").trim()) items.push(field); });
+    const selectedKeys = options.includeSelectedFiles === true ? selectedProofPhotoKeys() : [];
+    requiredProofPhotosForChecklist(currentChecklist).forEach((photo) => {
+      if (!hasPhotoType(call, photo.key) && !selectedKeys.includes(photo.key)) {
+        items.push({ label: "Foto: " + photo.label, hint: "Toque aqui para abrir a etapa e anexar a foto faltante.", target: photo.input, step: PROOF_INPUT_STEP_MAP[photo.input] || "inspecao", group: "Fotos" });
+      }
+    });
+    const acceptedText = $("signatureAcceptedText") ? $("signatureAcceptedText").value.trim() : "";
+    const refusal = $("signatureRefusalReason") ? $("signatureRefusalReason").value.trim() : "";
+    const hasNewSignature = !!(signaturePad && signaturePad.dirty);
+    if (!hasSignature(call) && !hasNewSignature && !refusal) {
+      items.push({ label: "Assinatura ou justificativa", hint: "Cliente assina na tela; se não assinar, escreva o motivo.", target: "driverSignatureSection", step: "finalizacao", group: "Assinatura" });
+    }
+    if ((hasNewSignature || refusal) && !acceptedText) {
+      items.push({ label: "Aceite textual", hint: "O texto de aceite precisa estar preenchido para salvar a assinatura/recusa.", target: "signatureAcceptedText", step: "finalizacao", group: "Assinatura" });
+    }
+    return items;
+  }
+  function focusProofTarget(targetId, stepKey) {
+    const call = selectedCall();
+    if (!call) return;
+    const index = PROOF_WIZARD_STEPS.findIndex((step) => step.key === stepKey);
+    if (index >= 0) {
+      state.proofWizardStep = index;
+      renderProofWizard();
+    }
+    window.setTimeout(() => {
+      const target = $(targetId) || document.getElementById(targetId);
+      const panel = $("driverPanelProofs");
+      [panel, target && target.closest && target.closest(".panel")].filter(Boolean).forEach((el) => {
+        el.classList.remove("is-collapsed");
+        const body = el.querySelector && el.querySelector(".panel-collapse-body");
+        if (body) body.hidden = false;
+        const toggle = el.querySelector && el.querySelector("[data-collapse-toggle]");
+        if (toggle) toggle.setAttribute("aria-expanded", "true");
+      });
+      if (!target) {
+        if (panel) panel.scrollIntoView({ behavior: "smooth", block: "start" });
+        return;
+      }
+      let details = target.closest && target.closest("details");
+      while (details) { details.open = true; details = details.parentElement && details.parentElement.closest ? details.parentElement.closest("details") : null; }
+      const wrapper = target.closest && (target.closest("div") || target.closest("section"));
+      const focusElement = target.matches && target.matches("input,select,textarea,button") ? target : target.querySelector && target.querySelector("input,select,textarea,button");
+      try { (wrapper || target).scrollIntoView({ behavior: "smooth", block: "center" }); } catch (_) {}
+      [target, wrapper].filter(Boolean).forEach((el) => {
+        el.classList.add("driver-proof-focus-pulse");
+        window.setTimeout(() => el.classList.remove("driver-proof-focus-pulse"), 1800);
+      });
+      if (focusElement && typeof focusElement.focus === "function") {
+        window.setTimeout(() => focusElement.focus({ preventScroll: true }), 250);
+      }
+      if (targetId === "driverSignatureSection") openSignatureCapture();
+    }, 90);
+  }
+
+  function renderProofMissingBox(call) {
+    const box = $("driverProofMissingBox");
+    if (!box) return;
+    if (!call) { box.innerHTML = ""; return; }
+    let items = [];
+    try { items = proofMissingItems(call); } catch (_) { items = []; }
+    if (!items.length) {
+      box.innerHTML = '<div class="driver-proof-simple-note">Provas obrigatórias completas para finalizar. Revise e toque em concluir.</div>';
+      return;
+    }
+    const groups = items.reduce((acc, item) => { const key = item.group || "Geral"; acc[key] = (acc[key] || 0) + 1; return acc; }, {});
+    const summary = Object.keys(groups).map((key) => `<span>${esc(key)}: ${groups[key]}</span>`).join("");
+    box.innerHTML = `<div class="driver-proof-missing-title">Faltam ${items.length} item(ns) para finalizar <span>toque no item para ir direto ao campo</span></div><div class="driver-proof-missing-summary">${summary}</div>` +
+      '<div class="driver-proof-missing-actions">' + items.map((item, index) => (
+        `<button type="button" data-missing-index="${index}"><b>${esc(item.group || "Geral")}</b>${esc(item.label)}<small>${esc(item.hint || "Abrir campo")}</small></button>`
+      )).join("") + '</div>';
+    box.querySelectorAll("button[data-missing-index]").forEach((button) => {
+      button.onclick = () => {
+        const item = items[Number(button.dataset.missingIndex || 0)] || items[0];
+        focusProofTarget(item.target, item.step);
+      };
+    });
+  }
+  function showFirstProofMissing(call, checklist, message) {
+    const items = proofMissingItems(call, checklist);
+    renderProofMissingBox(call);
+    if (items.length) {
+      setProofSubmitStatus((message || "Falta completar uma evidência.") + " Toque na pendência destacada para ir direto ao campo.", "danger");
+      focusProofTarget(items[0].target, items[0].step);
+      return false;
+    }
+    return true;
   }
 
   function requiredProofPhotosForChecklist(checklist) {
@@ -1871,7 +1998,8 @@
     renderSavedEvidenceSummary(call);
     restoreProofWizardStep(call);
     renderSignatureState(call);
-    setProofSubmitStatus("Checklist carregado. Avance etapa por etapa e salve o rascunho antes de sair.", "info", false);
+    renderProofMissingBox(call);
+    setProofSubmitStatus("Checklist carregado. Toque nas pendências acima para ir direto ao que falta.", "info", false);
   }
 
   function normalizeDriverProfile(user, data) {
@@ -1967,12 +2095,18 @@
       applyMobileGpsVisibility();
       scheduleRender("settings");
     };
-    unsubscribers.push(db.collection("settings").doc("publicIntegrations").onSnapshot(applyDriverSettingsSnapshot, (err) => {
-      console.warn("settings/publicIntegrations indisponível; usando fallback público do config.firebase.js.", err && err.message || err);
-      state.settings = {};
-      state.settingsLoaded = true;
-      applyMobileGpsVisibility();
-      scheduleRender("settings");
+    unsubscribers.push(db.collection("settings").doc("publicIntegrations").onSnapshot((snap) => {
+      if (snap && snap.exists) { applyDriverSettingsSnapshot(snap); return; }
+      db.collection("settings").doc("integrations").get().then((legacySnap) => {
+        if (legacySnap && legacySnap.exists) applyDriverSettingsSnapshot(legacySnap);
+        else { state.settings = {}; state.settingsLoaded = true; applyMobileGpsVisibility(); scheduleRender("settings"); }
+      }).catch(() => { state.settings = {}; state.settingsLoaded = true; applyMobileGpsVisibility(); scheduleRender("settings"); });
+    }, (err) => {
+      console.warn("settings/publicIntegrations indisponível; tentando settings/integrations antes do fallback local.", err && err.message || err);
+      db.collection("settings").doc("integrations").get().then((legacySnap) => {
+        if (legacySnap && legacySnap.exists) applyDriverSettingsSnapshot(legacySnap);
+        else { state.settings = {}; state.settingsLoaded = true; applyMobileGpsVisibility(); scheduleRender("settings"); }
+      }).catch(() => { state.settings = {}; state.settingsLoaded = true; applyMobileGpsVisibility(); scheduleRender("settings"); });
     }));
   }
 
@@ -2408,12 +2542,18 @@
     const forwardJump = targetIndex >= 0 && normalizedCurrentIndex >= 0 && targetIndex > normalizedCurrentIndex + 1;
     if (forwardJump) return toast("Avance uma etapa por vez. A próxima etapa válida é “" + statusLabel(nextStatusKey(call)) + "”.", "danger");
     if (key === "finalizado" && currentKey !== "entregue") return toast("Antes de finalizar, marque o atendimento como Entregue.", "danger");
-    if (key === "finalizado" && !["completo", "revisado"].includes(call.proofStatus || proofStatusFor(call))) {
-      state.proofWizardStep = PROOF_WIZARD_STEPS.length - 1;
-      renderProofWizard();
-      const proofPanel = $("driverPanelProofs");
-      if (proofPanel) proofPanel.scrollIntoView({ behavior: "smooth", block: "start" });
-      return toast("Antes de finalizar, conclua checklist, fotos obrigatórias e assinatura/aceite do cliente.", "danger");
+    if (key === "finalizado") {
+      const checklist = collectProofChecklist(call);
+      const validationCall = Object.assign({}, call, { proofChecklist: checklist });
+      const validation = validateCompleteProofPackage(validationCall, checklist);
+      if (!validation.ok) {
+        state.proofWizardStep = PROOF_WIZARD_STEPS.length - 1;
+        renderProofWizard();
+        const proofPanel = $("driverPanelProofs");
+        if (proofPanel) proofPanel.scrollIntoView({ behavior: "smooth", block: "start" });
+        showFirstProofMissing(validationCall, checklist, "Antes de finalizar, falta completar evidência obrigatória.");
+        return toast("Falta evidência. Abri o campo certo para o motorista completar.", "danger");
+      }
     }
 
     let confirmation = { confirmed: true, reason: "" };
@@ -2724,12 +2864,21 @@
     const signatureRefusalReason = $("signatureRefusalReason") ? $("signatureRefusalReason").value.trim() : "";
     const signaturePhase = $("signaturePhase") ? $("signaturePhase").value : "finalizacao";
     const hasNewSignature = !!(signaturePad && signaturePad.dirty);
-    if ((hasNewSignature || signatureRefusalReason) && !acceptedText) return setProofSubmitStatus("O aceite textual é obrigatório quando houver assinatura ou justificativa de recusa.", "danger");
+    if ((hasNewSignature || signatureRefusalReason) && !acceptedText) {
+      setProofSubmitStatus("O aceite textual é obrigatório quando houver assinatura ou justificativa de recusa.", "danger");
+      focusProofTarget("signatureAcceptedText", "finalizacao");
+      return;
+    }
 
     const previousChecklist = call.proofChecklist || {};
     const checklist = collectProofChecklist(call);
     const currentStepValidation = validateCurrentProofStep(checklist, state.proofWizardStep === PROOF_WIZARD_STEPS.length - 1);
-    if (!currentStepValidation.ok) return setProofSubmitStatus(currentStepValidation.message, "danger");
+    if (!currentStepValidation.ok) {
+      setProofSubmitStatus(currentStepValidation.message, "danger");
+      const phaseTarget = PROOF_STAGE_FIELDS[PROOF_WIZARD_STEPS[state.proofWizardStep].phase] || {};
+      focusProofTarget(phaseTarget.select || "driverPanelProofs", PROOF_WIZARD_STEPS[state.proofWizardStep].key);
+      return;
+    }
     const hasStageTouchedNow = PROOF_STAGES.some((stage) => {
       const select = stageSelect(stage);
       return !!(select && select.dataset.touched === "true");
@@ -2746,7 +2895,10 @@
       return touched && !hasDamageDescription && ["avaria", "intercorrencia", "recusa", "justificado"].includes(String(row.status || "")) && !String(row.justificativa || "").trim();
     });
     if (stagesNeedingJustification.length) {
-      return setProofSubmitStatus("Preencha a justificativa das etapas: " + stagesNeedingJustification.map((stage) => checklist[stage].label || stage).join(", ") + ".", "danger");
+      const stage = stagesNeedingJustification[0];
+      setProofSubmitStatus("Preencha a justificativa das etapas: " + stagesNeedingJustification.map((stage) => checklist[stage].label || stage).join(", ") + ".", "danger");
+      focusProofTarget((PROOF_STAGE_FIELDS[stage] || {}).justification || "driverPanelProofs", PROOF_WIZARD_STEPS.find((item) => item.phase === stage)?.key || "retirada");
+      return;
     }
 
     const requiredPhotos = requiredProofPhotosForChecklist(checklist);
@@ -2762,7 +2914,10 @@
       return setProofSubmitStatus("Toque na etapa que esta registrando agora, marque avarias no desenho ou envie pelo menos uma foto/assinatura/áudio/justificativa.", "danger");
     }
     if (missingBeforeUpload.length) {
-      return setProofSubmitStatus("Faltam fotos obrigatórias para a etapa marcada: " + missingBeforeUpload.map((photo) => photo.label).join(", ") + ". Se não for possível fotografar, marque a etapa como Justificado e escreva o motivo.", "danger");
+      setProofSubmitStatus("Faltam fotos obrigatórias para a etapa marcada: " + missingBeforeUpload.map((photo) => photo.label).join(", ") + ". Toque na pendência para ir direto ao campo.", "danger");
+      renderProofMissingBox(call);
+      focusProofTarget(missingBeforeUpload[0].input, PROOF_INPUT_STEP_MAP[missingBeforeUpload[0].input] || "inspecao");
+      return;
     }
 
     const cloud = activeCloudinaryConfig();
@@ -2881,8 +3036,9 @@
       }
 
       const nextCall = Object.assign({}, call, { proofChecklist: checklist, proofPhotos: proofPhotosMerged, proofAudios: proofAudiosMerged, customerSignature, phaseSignatures });
-      const missingAfterUpload = requiredPhotos.filter((photo) => !proofPhotosMerged.some((saved) => saved && saved.type === photo.key && saved.cloudinaryUrl));
-      const nextProofStatus = (missingAfterUpload.length === 0 && hasCompleteChecklist(nextCall) && hasOperationalPhaseAcceptances(nextCall)) ? "completo" : "parcial";
+      const completeValidation = validateCompleteProofPackage(nextCall, checklist);
+      const missingAfterUpload = completeValidation.missing.filter((item) => item.group === "Fotos").map((item) => ({ label: item.label.replace(/^Foto:\s*/, "") }));
+      const nextProofStatus = completeValidation.ok ? "completo" : "parcial";
       setProofSubmitStatus("Salvando provas no chamado...", "info", false);
       const callUpdates = {
         proofChecklist: checklist,
@@ -2995,7 +3151,11 @@
     openSignatureCapture,
     setProofWizardStep,
     saveProofDraft,
-    state
+    state,
+    proofMissingItems,
+    focusProofTarget,
+    proofStepCompleted,
+    validateCompleteProofPackage
   };
   setupProofStageButtons();
   setupProofWizardLayout();
@@ -3012,8 +3172,18 @@
   applyMobileGpsVisibility();
   if (typeof setupCollapsiblePanels === "function") {
     setupCollapsiblePanels(document, { collapseOnMobile: true, openFirst: 1 });
-    setTimeout(() => setupCollapsiblePanels(document, { collapseOnMobile: true, openFirst: 1 }), 250);
-    window.addEventListener("load", () => setupCollapsiblePanels(document, { collapseOnMobile: true, openFirst: 1 }), { once: true });
+    const collapseLegacyReport = () => {
+      const panel = $("driverPanelReport");
+      if (!panel) return;
+      panel.classList.add("is-collapsed", "collapsed", "driver-legacy-report");
+      const body = panel.querySelector(".panel-collapse-body");
+      if (body) { body.hidden = true; body.setAttribute("aria-hidden", "true"); }
+      const toggle = panel.querySelector("[data-collapse-toggle]");
+      if (toggle) { toggle.textContent = "Mais opções"; toggle.setAttribute("aria-expanded", "false"); }
+    };
+    collapseLegacyReport();
+    setTimeout(() => { setupCollapsiblePanels(document, { collapseOnMobile: true, openFirst: 1 }); collapseLegacyReport(); }, 250);
+    window.addEventListener("load", () => { setupCollapsiblePanels(document, { collapseOnMobile: true, openFirst: 1 }); collapseLegacyReport(); }, { once: true });
   }
   if ("serviceWorker" in navigator) navigator.serviceWorker.register("service-worker.js?v=" + DRIVER_FLOW_VERSION).catch(() => {});
 }());

@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  const VERSION = "jm-v32-7-4-motorista-assinatura-header";
+  const VERSION = "jm-v32-7-7-motorista-provas-fonte-unica";
   const utils = window.JM && window.JM.utils || {};
   const app = window.JM && window.JM.app;
   if (!app || !app.state) return;
