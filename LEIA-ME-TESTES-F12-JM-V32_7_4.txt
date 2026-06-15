@@ -1,4 +1,4 @@
-JM GUINCHOS V32.7.4 — TESTE COMPLETO PELO F12
+JM GUINCHOS V32.7.6 — TESTE COMPLETO PELO F12
 
 IMPORTANTE
 - O comando "await JM_TESTE.run()" é somente leitura.
@@ -21,7 +21,7 @@ COMO CARREGAR O SCRIPT
 
 TESTE SEGURO DO GESTOR
 Página:
-jm.html?v=jm-v32-7-4-motorista-assinatura-header
+jm.html?v=jm-v32-7-6-motorista-fluxo-guiado-validacao
 
 Comando:
 await JM_TESTE.run()
@@ -41,7 +41,7 @@ Esse teste verifica:
 
 TESTE SEGURO DO MOTORISTA
 Página:
-motorista.html?v=jm-v32-7-4-motorista-assinatura-header
+motorista.html?v=jm-v32-7-6-motorista-fluxo-guiado-validacao
 
 Login:
 moto@jm.com
@@ -66,7 +66,7 @@ Esse teste verifica:
 
 TESTE SEGURO DO SUPERADMIN
 Página:
-superadmin.html?v=jm-v32-7-4-motorista-assinatura-header
+superadmin.html?v=jm-v32-7-6-motorista-fluxo-guiado-validacao
 
 Comando:
 await JM_TESTE.run()

@@ -6,10 +6,10 @@
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
 <meta content="#07111f" name="theme-color"/>
 <title>JM Guinchos - Motorista</title>
-<link href="manifest.json?v=jm-v32-7-4-motorista-assinatura-header" rel="manifest"/>
+<link href="manifest.json?v=jm-v32-7-7-motorista-provas-fonte-unica" rel="manifest"/>
 <link href="assets/icon.svg" rel="icon" type="image/svg+xml"/>
-<link href="css/style.css?v=jm-v32-7-4-motorista-assinatura-header" rel="stylesheet"/>
-<link href="css/final-ux.css?v=jm-v32-7-4-motorista-assinatura-header" rel="stylesheet"/>
+<link href="css/style.css?v=jm-v32-7-7-motorista-provas-fonte-unica" rel="stylesheet"/>
+<link href="css/final-ux.css?v=jm-v32-7-7-motorista-provas-fonte-unica" rel="stylesheet"/>
 </head>
 <body class="driver-field-mode">
 <section class="login" id="driverLoginView">
@@ -129,7 +129,7 @@
 <div class="driver-expense-history" id="driverExpenseHistory"><p class="muted small">As despesas recentes aparecerão aqui.</p></div>
 </section>
 <section class="panel col-5" data-driver-section="provas" id="driverPanelReport" style="--driver-order:6">
-<h2>Relatório do atendimento</h2><div class="driver-context-notice" data-context-notice="true">Selecione o atendimento atual para liberar este módulo.</div>
+<h2>Relatório complementar opcional</h2><p class="muted small">Use somente se a central pedir um complemento. O caminho principal do motorista fica em Finalização e provas do atendimento.</p><div class="driver-context-notice" data-context-notice="true">Selecione o atendimento atual para liberar este módulo.</div>
 <form class="form-grid" id="driverReportForm">
 <div class="wide"><label>Chamado</label><select aria-describedby="driverActiveCallBox" data-active-call-select="true" id="driverReportCall"></select></div>
 <div><label>Checklist</label><select id="driverReportChecklist"><option value="ok">Sem avarias aparentes</option><option value="avaria">Com avaria registrada</option><option value="recusa">Cliente recusou assinatura/foto</option></select></div>
@@ -153,6 +153,7 @@
   <div class="proof-wizard-tabs" id="proofWizardTabs" role="tablist" aria-label="Etapas das provas"></div>
   <div class="proof-wizard-summary" id="proofWizardSummary">Selecione o atendimento para carregar o progresso.</div>
 </div>
+<div class="driver-proof-missing-box" id="driverProofMissingBox" aria-live="polite"></div>
 <form class="form-grid proof-wizard-mode" id="driverProofForm">
 <div class="wide"><label>Chamado</label><select aria-describedby="driverActiveCallBox" data-active-call-select="true" id="driverProofCall"></select></div>
 <div><label>Retirada / chegada no veículo</label><select id="proofStageRetirada"><option value="pendente">Pendente</option><option value="ok">OK</option><option value="avaria">Avaria registrada</option><option value="justificado">Justificado sem foto completa</option></select></div>
@@ -304,16 +305,16 @@
 </section>
 <footer aria-hidden="true" class="signature-footer"></footer>
 <div class="toast" id="toast"></div>
-<script src="js/config.firebase.js?v=jm-v32-7-4-motorista-assinatura-header"></script>
+<script src="js/config.firebase.js?v=jm-v32-7-7-motorista-provas-fonte-unica"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-database-compat.js"></script>
-<script src="js/utils.js?v=jm-v32-7-4-motorista-assinatura-header"></script>
-<script src="js/firebase.js?v=jm-v32-7-4-motorista-assinatura-header"></script>
-<script src="js/google-maps.js?v=jm-v32-7-4-motorista-assinatura-header"></script>
-<script src="js/mapa.js?v=jm-v32-7-4-motorista-assinatura-header"></script>
-<script src="js/motorista.js?v=jm-v32-7-4-motorista-assinatura-header"></script>
-<script src="js/motorista-final-ux.js?v=jm-v32-7-4-motorista-assinatura-header"></script>
+<script src="js/utils.js?v=jm-v32-7-7-motorista-provas-fonte-unica"></script>
+<script src="js/firebase.js?v=jm-v32-7-7-motorista-provas-fonte-unica"></script>
+<script src="js/google-maps.js?v=jm-v32-7-7-motorista-provas-fonte-unica"></script>
+<script src="js/mapa.js?v=jm-v32-7-7-motorista-provas-fonte-unica"></script>
+<script src="js/motorista.js?v=jm-v32-7-7-motorista-provas-fonte-unica"></script>
+<script src="js/motorista-final-ux.js?v=jm-v32-7-7-motorista-provas-fonte-unica"></script>
 </body>
 </html>

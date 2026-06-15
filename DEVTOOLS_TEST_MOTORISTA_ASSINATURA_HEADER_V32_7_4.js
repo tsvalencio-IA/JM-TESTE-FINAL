@@ -1,6 +1,6 @@
 (async () => {
   console.clear();
-  const VERSION = "jm-v32-7-4-motorista-assinatura-header";
+  const VERSION = "jm-v32-7-6-motorista-fluxo-guiado-validacao";
   const result = [];
   const test = (name, ok, detail = "") => {
     result.push({ teste: name, resultado: ok ? "OK" : "FALHOU", detalhe: String(detail || "") });

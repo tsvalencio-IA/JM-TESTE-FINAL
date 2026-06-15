@@ -1,9 +1,7 @@
 {
-  "version": "jm-v32-7-4-motorista-assinatura-header",
-  "release": "V32.7.3 Hotfix Login Sem Travamento",
-  "date": "2026-06-11",
-  "multiempresa": false,
-  "build": "2026-06-11-mutation-loop-hotfix",
-  "notes": "Correção do cabeçalho mobile do motorista e restauração visual/funcional explícita da assinatura.",
-  "updatedAt": "2026-06-11T00:00:00-03:00"
+  "version": "jm-v32-7-7-motorista-provas-fonte-unica",
+  "description": "Motorista com fluxo guiado e validação única de provas: pendências, proofStatus, etapa concluída e finalização usam a mesma regra.",
+  "updatedAt": "2026-06-12",
+  "build": "V32.7.7",
+  "notes": "Corrige divergência de proofStatus completo com pendências, falso ✓ em carregamento/entrega/finalização e recolhe relatório complementar."
 }

@@ -1,4 +1,4 @@
-# JM Guinchos V32.7.4 — Motorista: assinatura e cabeçalho legível
+# JM Guinchos V32.7.6 — Motorista: assinatura e cabeçalho legível
 
 ## Correções
 
@@ -15,4 +15,4 @@
 
 ## Versão de cache
 
-`jm-v32-7-4-motorista-assinatura-header`
+`jm-v32-7-6-motorista-fluxo-guiado-validacao`

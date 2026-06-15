@@ -240,7 +240,7 @@ Base usada: `JM-GUINCHOS-v32-6-fase2-status-checklist-evidencias`
 - 🟨 Confirmar login real de `jm@jm.com` e `tsvalencio@gmail.com` após publicação.
 
 
-## Hotfix V32.7.4 — Motorista: assinatura e cabeçalho legível
+## Hotfix V32.7.6 — Motorista: assinatura e cabeçalho legível
 
 - ✅ A assinatura não foi removida; o fluxo de upload, `customerSignature` e `phaseSignatures` foi preservado.
 - ✅ Etapa final renomeada para **Finalização e assinatura**.

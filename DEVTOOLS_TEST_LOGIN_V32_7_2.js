@@ -4,7 +4,7 @@
   if (!window.firebase || !window.JM || !JM.firebase) return console.error("Firebase/JM não carregado.");
   const user = JM.firebase.auth.currentUser;
   console.table({
-    versaoEsperada: "jm-v32-7-4-motorista-assinatura-header",
+    versaoEsperada: "jm-v32-7-6-motorista-fluxo-guiado-validacao",
     usuarioAutenticado: !!user,
     email: user && user.email || "sem sessão",
     uid: user && user.uid || "-",

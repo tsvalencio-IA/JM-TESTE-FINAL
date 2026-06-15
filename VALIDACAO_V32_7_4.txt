@@ -1,6 +1,6 @@
-JM GUINCHOS V32.7.4 — VALIDAÇÃO
+JM GUINCHOS V32.7.6 — VALIDAÇÃO
 
-Versão: jm-v32-7-4-motorista-assinatura-header
+Versão: jm-v32-7-6-motorista-fluxo-guiado-validacao
 
 VALIDAÇÕES CONCLUÍDAS
 - Todos os JavaScripts passaram em node --check.

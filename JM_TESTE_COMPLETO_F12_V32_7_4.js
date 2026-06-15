@@ -1,8 +1,8 @@
 (function () {
   "use strict";
 
-  const SUITE_VERSION = "JM-F12-V32.7.4-2026-06-11";
-  const EXPECTED_APP_VERSION = "jm-v32-7-4-motorista-assinatura-header";
+  const SUITE_VERSION = "JM-F12-V32.7.6-2026-06-11";
+  const EXPECTED_APP_VERSION = "jm-v32-7-6-motorista-fluxo-guiado-validacao";
   const TEST_PREFIX = "TESTE_F12_";
   const DEFAULT_DRIVER_EMAIL = "moto@jm.com";
   const DEFAULT_DRIVER_UID = "Gfz0edLP9XQQDba4mDp1TeiWBRt1";

@@ -1,8 +1,8 @@
 {
   "name": "jm-guinchos",
-  "version": "32.7.0",
+  "version": "32.7.7",
   "private": true,
-  "description": "JM Guinchos V32.7 - operação, motorista, rota, evidências, financeiro e UX final.",
+  "description": "JM Guinchos V32.7.7 - provas com fonte única de validação, bloqueio real de finalização e motorista mais simples.",
   "scripts": {
     "start": "node server.js",
     "serve": "node server.js",
